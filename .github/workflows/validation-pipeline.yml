@@ -65,7 +65,7 @@ jobs:
       - name: Extract Agent Model
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
-          conda activate carla_9_16_env
+          conda activate carla_9_16_pipeline
           cd ~/Desktop/carla-cicd-pipeline
           python3 pipeline/stage2_formal/extract_agent_model.py \
             --agent-dir test_projects/scenario_runner \
@@ -75,7 +75,7 @@ jobs:
       - name: Run nuXmv Model Checker
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
-          conda activate carla_9_16_env
+          conda activate carla_9_16_pipeline
           cd ~/Desktop/carla-cicd-pipeline
           python3 pipeline/stage2_formal/run_model_checker.py \
             --model results/stage2/agent_model_seeded.smv \
@@ -85,7 +85,7 @@ jobs:
       - name: Run CARLA Scenarios
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
-          conda activate carla_9_16_env
+          conda activate carla_9_16_pipeline
           cd ~/Desktop/carla-cicd-pipeline
           python3 pipeline/stage2_formal/run_scenarios.py \
             --scenarios-dir results/stage2/scenarios_seeded \
@@ -121,7 +121,7 @@ jobs:
       - name: Run Metrics Aggregator
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
-          conda activate carla_9_16_env
+          conda activate carla_9_16_pipeline
           cd ~/Desktop/carla-cicd-pipeline
           python3 metrics/aggregate_pipeline_metrics.py \
             --ground-truth defect_seeding/ground_truth.json \
