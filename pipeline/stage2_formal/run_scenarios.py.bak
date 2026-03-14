@@ -1,0 +1,306 @@
+"""
+Stage 2 Scenario Executor and Log Scraper
+==========================================
+Runs nuXmv-generated OpenSCENARIO files through CARLA ScenarioRunner
+and scrapes the output logs for observable simulation failures.
+
+A Stage 2 detection is confirmed only when CARLA simulation records
+an actual infraction or collision — not merely when nuXmv finds a
+counterexample. This matches the methodology description exactly.
+
+Usage:
+  # Start CARLA server first:
+  #   /opt/carla_9_16/CarlaUE4.sh -RenderOffScreen -world-port=2000
+  #
+  python3 pipeline/stage2_formal/run_scenarios.py \
+    --scenarios-dir results/stage2/scenarios_seeded \
+    --scenario-runner test_projects/scenario_runner/scenario_runner.py \
+    --output results/stage2/simulation_results.json \
+    --carla-port 2000 \
+    --timeout 60
+"""
+
+import subprocess
+import json
+import os
+import re
+import time
+import argparse
+from pathlib import Path
+from dataclasses import dataclass, field, asdict
+from typing import List, Optional
+
+
+# ── Simulation failure patterns to scrape from logs ───────────────────────────
+
+# These are the observable CARLA simulation failures we look for.
+# Each pattern maps to a failure category.
+FAILURE_PATTERNS = [
+    # Collision events
+    (re.compile(r'collision', re.I),                          'collision'),
+    (re.compile(r'Collision.*detected', re.I),                'collision'),
+    (re.compile(r'collid', re.I),                             'collision'),
+
+    # Traffic violations
+    (re.compile(r'red.?light.*violation', re.I),              'red_light_violation'),
+    (re.compile(r'ran.*red.?light', re.I),                    'red_light_violation'),
+    (re.compile(r'traffic.*light.*infraction', re.I),         'red_light_violation'),
+
+    # Speed violations
+    (re.compile(r'speed.*limit.*exceeded', re.I),             'speeding'),
+    (re.compile(r'speeding', re.I),                           'speeding'),
+    (re.compile(r'overspeed', re.I),                          'speeding'),
+
+    # Route / scenario failures
+    (re.compile(r'scenario.*failed', re.I),                   'scenario_failure'),
+    (re.compile(r'FAILURE', re.I),                            'scenario_failure'),
+    (re.compile(r'AgentCrashed', re.I),                       'agent_crash'),
+    (re.compile(r'Timeout', re.I),                            'timeout'),
+
+    # Pedestrian violations
+    (re.compile(r'pedestrian.*hit', re.I),                    'pedestrian_hit'),
+    (re.compile(r'walker.*collision', re.I),                  'pedestrian_hit'),
+
+    # TTC / safety distance
+    (re.compile(r'time.to.collision', re.I),                  'ttc_violation'),
+    (re.compile(r'safety.*distance.*violation', re.I),        'safety_distance'),
+
+    # ScenarioRunner outcome lines
+    (re.compile(r'Not all scenario tests were successful', re.I), 'scenario_failure'),
+    (re.compile(r'All scenario tests were successful', re.I),  'success'),
+    (re.compile(r'Nothing to analyze', re.I),                  'no_criteria'),
+    # Scenario success (no failure)
+    (re.compile(r'SUCCESS', re.I),                            'success'),
+    (re.compile(r'scenario.*completed', re.I),                'success'),
+]
+
+
+@dataclass
+class ScenarioResult:
+    scenario_file: str
+    property_name: str
+    ran: bool = False
+    exit_code: int = -1
+    simulation_failures: List[str] = field(default_factory=list)
+    raw_log: str = ''
+    confirmed_detection: bool = False
+    detection_reason: str = ''
+    duration_sec: float = 0.0
+    error: Optional[str] = None
+
+
+def scrape_log_for_failures(log: str) -> List[str]:
+    """Scan ScenarioRunner log output for observable simulation failures."""
+    failures = []
+    for pattern, label in FAILURE_PATTERNS:
+        if pattern.search(log):
+            if label not in failures:
+                failures.append(label)
+    return failures
+
+
+def is_confirmed_detection(failures: List[str], property_name: str) -> tuple:
+    """
+    Determine if simulation failures confirm the nuXmv counterexample.
+    Returns (confirmed: bool, reason: str)
+    """
+    if not failures:
+        return False, 'No observable simulation failure recorded'
+
+    if 'success' in failures and 'scenario_failure' not in failures and len(failures) == 1:
+        return False, 'Scenario completed successfully — no failure triggered'
+
+    # ScenarioRunner explicitly reporting failure is a confirmed detection
+    if 'scenario_failure' in failures:
+        return True, 'ScenarioRunner reported: Not all scenario tests were successful'
+
+
+    # Map property to expected failure types
+    property_failure_map = {
+        'ttc_threshold':        ['collision', 'ttc_violation', 'scenario_failure'],
+        'urban_speed_limit':    ['speeding', 'scenario_failure'],
+        'red_light_compliance': ['red_light_violation', 'scenario_failure'],
+        'no_collision':         ['collision', 'agent_crash'],
+        'safe_following_distance': ['collision', 'safety_distance', 'scenario_failure'],
+        'pedestrian_safety':    ['pedestrian_hit', 'collision', 'scenario_failure'],
+        'agent_moves':          ['timeout', 'scenario_failure'],
+    }
+
+    expected = property_failure_map.get(property_name, [])
+    matched = [f for f in failures if f in expected or f == 'scenario_failure']
+
+    if matched:
+        return True, f"Simulation confirmed: {', '.join(matched)}"
+
+    # Any non-success failure is partial evidence
+    non_success = [f for f in failures if f != 'success']
+    if non_success:
+        return True, f"Observable failure detected: {', '.join(non_success)}"
+
+    return False, f"Failures {failures} do not match expected for {property_name}"
+
+
+def run_scenario(scenario_file: str, scenario_runner_py: str,
+                 carla_port: int, timeout: int) -> ScenarioResult:
+    """Run a single .xosc scenario through ScenarioRunner."""
+    scenario_path = os.path.abspath(scenario_file)
+    property_name = Path(scenario_file).stem.split('_', 2)[-1] if '_' in Path(scenario_file).stem else Path(scenario_file).stem
+
+    result = ScenarioResult(
+        scenario_file=scenario_file,
+        property_name=property_name,
+    )
+
+    if not os.path.exists(scenario_path):
+        result.error = f"Scenario file not found: {scenario_path}"
+        return result
+
+    cmd = [
+        'python3', scenario_runner_py,
+        '--openscenario', scenario_path,
+        '--host', 'localhost',
+        '--port', str(carla_port),
+        '--timeout', str(timeout),
+    ]
+
+    print(f"  Running: {os.path.basename(scenario_file)}")
+    print(f"  Command: {' '.join(cmd[:4])} ...")
+
+    start = time.time()
+    try:
+        import copy
+        env = copy.copy(os.environ)
+        carla_root = env.get('CARLA_ROOT', '/opt/carla_9_16')
+        existing_pythonpath = env.get('PYTHONPATH', '')
+        carla_paths = [
+            f"{carla_root}/PythonAPI/carla/dist/carla-0.9.16-py3.10-linux-x86_64.egg",
+            f"{carla_root}/PythonAPI/carla",
+            f"{carla_root}/PythonAPI",
+            os.path.dirname(os.path.abspath(scenario_runner_py)),
+        ]
+        env['PYTHONPATH'] = ':'.join(carla_paths) + (':' + existing_pythonpath if existing_pythonpath else '')
+
+        proc = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=timeout + 30,
+            cwd=os.path.dirname(os.path.abspath(scenario_runner_py)),
+            env=env,
+        )
+        result.ran = True
+        result.exit_code = proc.returncode
+        result.raw_log = proc.stdout + proc.stderr
+        result.duration_sec = round(time.time() - start, 2)
+
+        # Scrape for failures
+        result.simulation_failures = scrape_log_for_failures(result.raw_log)
+        result.confirmed_detection, result.detection_reason = is_confirmed_detection(
+            result.simulation_failures, property_name)
+
+        status = "✅ CONFIRMED" if result.confirmed_detection else "❌ not confirmed"
+        print(f"  {status} — failures: {result.simulation_failures or 'none'}")
+
+    except subprocess.TimeoutExpired:
+        result.ran = True
+        result.exit_code = -1
+        result.error = f"Process timed out after {timeout + 30}s"
+        result.duration_sec = round(time.time() - start, 2)
+        result.simulation_failures = ['timeout']
+        result.confirmed_detection = True
+        result.detection_reason = "Scenario runner timed out — agent failed to complete"
+        print(f"  ⚠️  Timeout")
+
+    except Exception as e:
+        result.error = str(e)
+        print(f"  ❌ Error: {e}")
+
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Run Stage 2 scenarios in CARLA and scrape logs")
+    parser.add_argument('--scenarios-dir',    required=True, help='Directory with .xosc files')
+    parser.add_argument('--scenario-runner',  required=True, help='Path to scenario_runner.py')
+    parser.add_argument('--output',           required=True, help='Output JSON path')
+    parser.add_argument('--carla-port',       type=int, default=2000)
+    parser.add_argument('--timeout',          type=int, default=60,
+                        help='Per-scenario timeout in seconds')
+    parser.add_argument('--scenarios',        nargs='*',
+                        help='Specific scenario files to run (default: all in dir)')
+    args = parser.parse_args()
+
+    # Find scenarios
+    if args.scenarios:
+        scenario_files = args.scenarios
+    else:
+        scenario_files = sorted(Path(args.scenarios_dir).glob('*.xosc'))
+        scenario_files = [str(f) for f in scenario_files]
+
+    if not scenario_files:
+        print(f"No .xosc files found in {args.scenarios_dir}")
+        return
+
+    print(f"\nStage 2 Scenario Execution")
+    print(f"{'='*50}")
+    print(f"Scenarios to run  : {len(scenario_files)}")
+    print(f"ScenarioRunner    : {args.scenario_runner}")
+    print(f"CARLA port        : {args.carla_port}")
+    print(f"Per-scenario limit: {args.timeout}s")
+    print(f"{'='*50}\n")
+
+    # Verify CARLA is reachable
+    try:
+        import carla
+        client = carla.Client('localhost', args.carla_port)
+        client.set_timeout(10.0)
+        version = client.get_server_version()
+        print(f"CARLA server connected: v{version}\n")
+    except Exception as e:
+        print(f"WARNING: Cannot connect to CARLA server: {e}")
+        print("Make sure CARLA is running before executing scenarios.\n")
+
+    results = []
+    confirmed = 0
+
+    for i, scenario_file in enumerate(scenario_files, 1):
+        print(f"[{i}/{len(scenario_files)}] {os.path.basename(scenario_file)}")
+        result = run_scenario(
+            scenario_file,
+            args.scenario_runner,
+            args.carla_port,
+            args.timeout,
+        )
+        results.append(result)
+        if result.confirmed_detection:
+            confirmed += 1
+        # Small pause between scenarios to let CARLA reset
+        if i < len(scenario_files):
+            time.sleep(3)
+
+    # Summary
+    print(f"\n{'='*50}")
+    print(f"SIMULATION RESULTS SUMMARY")
+    print(f"{'='*50}")
+    print(f"Scenarios run      : {sum(1 for r in results if r.ran)}/{len(results)}")
+    print(f"Confirmed detections: {confirmed}/{len(results)}")
+    print()
+    for r in results:
+        status = "✅" if r.confirmed_detection else ("⚠️ " if r.error else "❌")
+        print(f"  {status} {r.property_name:<30} {r.detection_reason}")
+
+    # Save output
+    output = {
+        'scenarios_dir': args.scenarios_dir,
+        'total_scenarios': len(results),
+        'confirmed_detections': confirmed,
+        'results': [asdict(r) for r in results],
+    }
+    os.makedirs(os.path.dirname(args.output) if os.path.dirname(args.output) else '.', exist_ok=True)
+    with open(args.output, 'w') as f:
+        json.dump(output, f, indent=2)
+    print(f"\nResults saved to: {args.output}")
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,53 @@
+{
+  "total_scenarios": 6,
+  "scenarios": [
+    {
+      "file": "results/stage2/scenarios/CE_001_ttc_threshold.xosc",
+      "property_violated": "ttc_threshold",
+      "description": "TTC drops below 1500ms \u2014 NPC brakes suddenly ahead of ego",
+      "ego_speed": 30.0,
+      "following_distance": 50.0,
+      "has_pedestrian": false
+    },
+    {
+      "file": "results/stage2/scenarios/CE_002_urban_speed_limit.xosc",
+      "property_violated": "urban_speed_limit",
+      "description": "Ego exceeds urban speed limit \u2014 NPC triggers at intersection",
+      "ego_speed": 51.0,
+      "following_distance": 1.0,
+      "has_pedestrian": false
+    },
+    {
+      "file": "results/stage2/scenarios/CE_003_red_light_compliance.xosc",
+      "property_violated": "red_light_compliance",
+      "description": "Ego fails to stop at red light \u2014 NPC crosses intersection",
+      "ego_speed": 30.0,
+      "following_distance": 49.0,
+      "has_pedestrian": false
+    },
+    {
+      "file": "results/stage2/scenarios/CE_004_no_collision.xosc",
+      "property_violated": "no_collision",
+      "description": "Collision scenario \u2014 vehicles on collision course",
+      "ego_speed": 30.0,
+      "following_distance": 10.0,
+      "has_pedestrian": false
+    },
+    {
+      "file": "results/stage2/scenarios/CE_005_pedestrian_safety.xosc",
+      "property_violated": "pedestrian_safety",
+      "description": "Pedestrian steps into path \u2014 ego fails to brake",
+      "ego_speed": 30.0,
+      "following_distance": 50.0,
+      "has_pedestrian": false
+    },
+    {
+      "file": "results/stage2/scenarios/CE_006_agent_moves.xosc",
+      "property_violated": "agent_moves",
+      "description": "Agent becomes stuck \u2014 no forward progress achieved",
+      "ego_speed": 30.0,
+      "following_distance": 10.0,
+      "has_pedestrian": false
+    }
+  ]
+}

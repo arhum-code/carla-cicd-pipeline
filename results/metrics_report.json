@@ -1,0 +1,168 @@
+{
+  "summary": {
+    "total_defects": 11,
+    "stage1": {
+      "detected": 3,
+      "detection_rate": 0.2727,
+      "precision": 0.4286,
+      "recall": 0.2727,
+      "false_positives": 4
+    },
+    "stage2": {
+      "detected": 1,
+      "detection_rate": 0.0909,
+      "precision": 1.0,
+      "recall": 0.0909,
+      "new_violations_vs_clean": [
+        "SMV_STRUCTURAL_DIFF"
+      ],
+      "note": "Stage 2 detects Logic Error defects via structural SMV model diff"
+    },
+    "overlap_coefficient": 0.0,
+    "complementarity_coefficient": 1.0
+  },
+  "category_breakdown": {
+    "API Misuse": {
+      "total": 3,
+      "stage1": 0,
+      "stage2": 0,
+      "either": 0
+    },
+    "Logic Error": {
+      "total": 2,
+      "stage1": 1,
+      "stage2": 1,
+      "either": 2
+    },
+    "Resource Management": {
+      "total": 2,
+      "stage1": 1,
+      "stage2": 0,
+      "either": 1
+    },
+    "Robustness Failure": {
+      "total": 2,
+      "stage1": 1,
+      "stage2": 0,
+      "either": 1
+    },
+    "Scenario Specification": {
+      "total": 2,
+      "stage1": 0,
+      "stage2": 0,
+      "either": 0
+    }
+  },
+  "per_defect": [
+    {
+      "defect_id": "D001",
+      "category": "API Misuse",
+      "source": "real_bug",
+      "file": "srunner/scenariomanager/actorcontrols/vehicle_velocity_control.py",
+      "detected_by_stage1": false,
+      "detected_by_stage2": false,
+      "stage1_finding": null,
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D002",
+      "category": "API Misuse",
+      "source": "real_bug",
+      "file": "srunner/scenariomanager/actorcontrols/vehicle_teleport_control.py",
+      "detected_by_stage1": false,
+      "detected_by_stage2": false,
+      "stage1_finding": null,
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D003",
+      "category": "Logic Error",
+      "source": "real_bug",
+      "file": "srunner/osc2_dm/physical_types.py",
+      "detected_by_stage1": true,
+      "detected_by_stage2": false,
+      "stage1_finding": "CRL-000",
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D004",
+      "category": "Resource Management",
+      "source": "real_bug",
+      "file": "manual_control.py",
+      "detected_by_stage1": false,
+      "detected_by_stage2": false,
+      "stage1_finding": null,
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D005",
+      "category": "API Misuse",
+      "source": "real_bug",
+      "file": "srunner/scenarios/osc2_scenario.py",
+      "detected_by_stage1": false,
+      "detected_by_stage2": false,
+      "stage1_finding": null,
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D006",
+      "category": "Robustness Failure",
+      "source": "mutation",
+      "file": "srunner/scenariomanager/actorcontrols/visualizer.py",
+      "detected_by_stage1": true,
+      "detected_by_stage2": false,
+      "stage1_finding": "CRL-000",
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D007",
+      "category": "Logic Error",
+      "source": "mutation",
+      "file": "srunner/scenariomanager/actorcontrols/vehicle_longitudinal_control.py",
+      "detected_by_stage1": false,
+      "detected_by_stage2": true,
+      "stage1_finding": null,
+      "stage2_finding": "Stage 2 detection: SMV_STRUCTURAL_DIFF"
+    },
+    {
+      "defect_id": "D008",
+      "category": "Scenario Specification",
+      "source": "handcrafted",
+      "file": "srunner/examples/PedestrianCrossingFront.xosc",
+      "detected_by_stage1": false,
+      "detected_by_stage2": false,
+      "stage1_finding": null,
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D009",
+      "category": "Scenario Specification",
+      "source": "handcrafted",
+      "file": "srunner/examples/PedestrianCrossingFront.xosc",
+      "detected_by_stage1": false,
+      "detected_by_stage2": false,
+      "stage1_finding": null,
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D_LB_001",
+      "category": "Resource Management",
+      "source": "mutation",
+      "file": "leaderboard/autoagents/agent_wrapper.py",
+      "detected_by_stage1": true,
+      "detected_by_stage2": false,
+      "stage1_finding": "CRL-001",
+      "stage2_finding": null
+    },
+    {
+      "defect_id": "D_LB_002",
+      "category": "Robustness Failure",
+      "source": "mutation",
+      "file": "leaderboard/autoagents/agent_wrapper.py",
+      "detected_by_stage1": false,
+      "detected_by_stage2": false,
+      "stage1_finding": null,
+      "stage2_finding": null
+    }
+  ]
+}

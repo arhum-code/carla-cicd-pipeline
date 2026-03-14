@@ -1,0 +1,256 @@
+name: CARLA Validation Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:   # allows manual trigger from GitHub UI
+
+env:
+  PYTHON_VERSION: "3.8"
+  RESULTS_DIR: "pipeline_results"
+
+jobs:
+  # ─────────────────────────────────────────────
+  # STAGE 1: Static Code Analysis (no simulation)
+  # ─────────────────────────────────────────────
+  stage1-static-analysis:
+    name: "Stage 1 · Static Analysis"
+    runs-on: ubuntu-latest
+    outputs:
+      stage1_passed: ${{ steps.gate.outputs.passed }}
+      stage1_report: ${{ steps.gate.outputs.report_path }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install static analysis dependencies
+        run: |
+          pip install flake8 pylint bandit pyflakes
+          pip install -r requirements.txt || true
+
+      - name: Run Flake8 (syntax + style)
+        run: |
+          mkdir -p ${{ env.RESULTS_DIR }}/stage1
+          flake8 . \
+            --exclude=.git,__pycache__,.venv \
+            --max-line-length=120 \
+            --format=json \
+            --output-file=${{ env.RESULTS_DIR }}/stage1/flake8_report.json || true
+
+      - name: Run Pylint (code quality)
+        run: |
+          pylint **/*.py \
+            --output-format=json \
+            --recursive=yes \
+            --ignore=.git,.venv \
+            > ${{ env.RESULTS_DIR }}/stage1/pylint_report.json || true
+
+      - name: Run Bandit (security issues)
+        run: |
+          bandit -r . \
+            --exclude .git,.venv \
+            -f json \
+            -o ${{ env.RESULTS_DIR }}/stage1/bandit_report.json || true
+
+      - name: Run CARLA-specific custom rules
+        run: |
+          python pipeline/stage1_static/carla_custom_rules.py \
+            --target . \
+            --output ${{ env.RESULTS_DIR }}/stage1/carla_rules_report.json
+
+      - name: Aggregate Stage 1 results & gate check
+        id: gate
+        run: |
+          python pipeline/stage1_static/aggregate_results.py \
+            --results-dir ${{ env.RESULTS_DIR }}/stage1 \
+            --output ${{ env.RESULTS_DIR }}/stage1/summary.json
+          
+          # Gate: fail if BLOCKER or CRITICAL severity issues found
+          PASSED=$(python -c "
+          import json, sys
+          with open('${{ env.RESULTS_DIR }}/stage1/summary.json') as f:
+              s = json.load(f)
+          print('true' if s.get('blocker_count', 0) == 0 else 'false')
+          ")
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "report_path=${{ env.RESULTS_DIR }}/stage1/summary.json" >> $GITHUB_OUTPUT
+
+      - name: Upload Stage 1 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage1-static-analysis-results
+          path: ${{ env.RESULTS_DIR }}/stage1/
+
+      - name: Gate check — fail pipeline if blockers found
+        if: steps.gate.outputs.passed == 'false'
+        run: |
+          echo "::error::Stage 1 FAILED — blocker-level defects detected. Fix before simulation."
+          python pipeline/stage1_static/print_failure_report.py \
+            --summary ${{ env.RESULTS_DIR }}/stage1/summary.json
+          exit 1
+
+  # ─────────────────────────────────────────────
+  # STAGE 2: Formal Scenario Synthesis (VIVAS/nuXmv)
+  # ─────────────────────────────────────────────
+  stage2-formal-synthesis:
+    name: "Stage 2 · Formal Scenario Synthesis"
+    runs-on: ubuntu-latest
+    needs: stage1-static-analysis
+    if: needs.stage1-static-analysis.outputs.stage1_passed == 'true'
+    outputs:
+      stage2_passed: ${{ steps.gate.outputs.passed }}
+      scenarios_generated: ${{ steps.gate.outputs.scenario_count }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install nuXmv
+        run: |
+          sudo apt-get update -qq
+          bash pipeline/stage2_formal/install_nuxmv.sh
+
+      - name: Install VIVAS dependencies
+        run: |
+          pip install -r pipeline/stage2_formal/requirements.txt
+
+      - name: Extract agent models for symbolic analysis
+        run: |
+          mkdir -p ${{ env.RESULTS_DIR }}/stage2
+          python pipeline/stage2_formal/extract_agent_model.py \
+            --agent-dir . \
+            --output ${{ env.RESULTS_DIR }}/stage2/agent_model.smv
+
+      - name: Run nuXmv model checking (find counterexamples)
+        run: |
+          python pipeline/stage2_formal/run_model_checker.py \
+            --model ${{ env.RESULTS_DIR }}/stage2/agent_model.smv \
+            --properties pipeline/stage2_formal/safety_properties.ltl \
+            --output ${{ env.RESULTS_DIR }}/stage2/counterexamples.json \
+            --timeout 300
+
+      - name: Translate counterexamples to OpenSCENARIO
+        run: |
+          python pipeline/stage2_formal/counterexample_to_scenario.py \
+            --counterexamples ${{ env.RESULTS_DIR }}/stage2/counterexamples.json \
+            --output-dir ${{ env.RESULTS_DIR }}/stage2/scenarios/
+
+      - name: Gate check & summarize
+        id: gate
+        run: |
+          SCENARIO_COUNT=$(ls ${{ env.RESULTS_DIR }}/stage2/scenarios/*.xosc 2>/dev/null | wc -l)
+          echo "scenario_count=$SCENARIO_COUNT" >> $GITHUB_OUTPUT
+          echo "passed=true" >> $GITHUB_OUTPUT
+          echo "Generated $SCENARIO_COUNT hazardous scenarios for CARLA execution"
+
+      - name: Upload Stage 2 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-formal-synthesis-results
+          path: ${{ env.RESULTS_DIR }}/stage2/
+
+  # ─────────────────────────────────────────────
+  # STAGE 3: LLM-Assisted Scenario Generation (contingent)
+  # ─────────────────────────────────────────────
+  stage3-llm-generation:
+    name: "Stage 3 · LLM-Assisted Generation"
+    runs-on: ubuntu-latest
+    needs: stage2-formal-synthesis
+    # Only runs if OPENAI_API_KEY secret is configured
+    if: |
+      needs.stage2-formal-synthesis.outputs.stage2_passed == 'true' &&
+      vars.ENABLE_LLM_STAGE == 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install LLM stage dependencies
+        run: pip install openai jsonschema -r pipeline/stage3_llm/requirements.txt
+
+      - name: Run LLM scenario generation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          mkdir -p ${{ env.RESULTS_DIR }}/stage3
+          python pipeline/stage3_llm/generate_scenarios.py \
+            --requirements pipeline/stage3_llm/safety_requirements.txt \
+            --schema pipeline/stage3_llm/openscenario_schema.json \
+            --max-scenarios 20 \
+            --output-dir ${{ env.RESULTS_DIR }}/stage3/scenarios/ \
+            --report ${{ env.RESULTS_DIR }}/stage3/generation_report.json
+
+      - name: Validate generated scenarios
+        run: |
+          python pipeline/stage3_llm/validate_scenarios.py \
+            --scenarios-dir ${{ env.RESULTS_DIR }}/stage3/scenarios/ \
+            --report ${{ env.RESULTS_DIR }}/stage3/validation_report.json
+
+      - name: Upload Stage 3 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage3-llm-generation-results
+          path: ${{ env.RESULTS_DIR }}/stage3/
+
+  # ─────────────────────────────────────────────
+  # FINAL: Aggregate metrics across all stages
+  # ─────────────────────────────────────────────
+  collect-metrics:
+    name: "Collect Cross-Stage Metrics"
+    runs-on: ubuntu-latest
+    needs: [stage1-static-analysis, stage2-formal-synthesis]
+    if: always()
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all stage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: downloaded_results/
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install metrics dependencies
+        run: pip install pandas scipy numpy matplotlib
+
+      - name: Aggregate cross-technique metrics
+        run: |
+          python metrics/aggregate_pipeline_metrics.py \
+            --results-dir downloaded_results/ \
+            --output pipeline_results/final_report.json \
+            --ground-truth defect_seeding/ground_truth.json
+
+      - name: Generate comparison report
+        run: |
+          python metrics/generate_comparison_report.py \
+            --metrics pipeline_results/final_report.json \
+            --output pipeline_results/comparison_report.md
+
+      - name: Upload final report
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-pipeline-report
+          path: pipeline_results/

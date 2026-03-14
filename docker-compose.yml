@@ -1,0 +1,125 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────
+# CARLA CI/CD Validation Pipeline — Local Development Stack
+#
+# Usage:
+#   docker compose up stage1          # Run static analysis only
+#   docker compose up stage1 stage2   # Run stages 1 & 2
+#   docker compose up                 # Run full pipeline
+#
+# Requirements:
+#   - Docker + Docker Compose installed
+#   - .env file with OPENAI_API_KEY (for Stage 3 only)
+# ─────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Stage 1: Static Code Analysis ─────────────────────────
+  stage1:
+    build:
+      context: .
+      dockerfile: pipeline/stage1_static/Dockerfile
+    container_name: carla_stage1_static
+    volumes:
+      - .:/workspace                          # mount your CARLA project here
+      - ./pipeline_results:/results
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== Stage 1: Static Analysis ===' &&
+        pip install flake8 pylint bandit -q &&
+        python pipeline/stage1_static/carla_custom_rules.py
+          --target /workspace
+          --output /results/stage1/carla_rules_report.json &&
+        python pipeline/stage1_static/aggregate_results.py
+          --results-dir /results/stage1
+          --output /results/stage1/summary.json &&
+        python pipeline/stage1_static/print_failure_report.py
+          --summary /results/stage1/summary.json || true
+      "
+    networks:
+      - pipeline_net
+
+  # ── Stage 2: Formal Scenario Synthesis ────────────────────
+  stage2:
+    build:
+      context: .
+      dockerfile: pipeline/stage2_formal/Dockerfile
+    container_name: carla_stage2_formal
+    depends_on:
+      - stage1
+    volumes:
+      - .:/workspace
+      - ./pipeline_results:/results
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== Stage 2: Formal Scenario Synthesis ===' &&
+        python pipeline/stage2_formal/run_model_checker.py
+          --model /results/stage2/agent_model.smv
+          --properties pipeline/stage2_formal/safety_properties.ltl
+          --output /results/stage2/counterexamples.json
+          --timeout 300
+      "
+    networks:
+      - pipeline_net
+
+  # ── Stage 3: LLM-Assisted Generation (optional) ───────────
+  stage3:
+    build:
+      context: .
+      dockerfile: pipeline/stage3_llm/Dockerfile
+    container_name: carla_stage3_llm
+    depends_on:
+      - stage2
+    volumes:
+      - .:/workspace
+      - ./pipeline_results:/results
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}     # set in .env file
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== Stage 3: LLM Scenario Generation ===' &&
+        python pipeline/stage3_llm/generate_scenarios.py
+          --requirements pipeline/stage3_llm/safety_requirements.txt
+          --schema pipeline/stage3_llm/openscenario_schema.json
+          --max-scenarios 20
+          --output-dir /results/stage3/scenarios/
+          --report /results/stage3/generation_report.json
+      "
+    networks:
+      - pipeline_net
+    profiles:
+      - llm    # only runs when: docker compose --profile llm up
+
+  # ── Metrics Collector ─────────────────────────────────────
+  metrics:
+    image: python:3.8-slim
+    container_name: carla_metrics
+    depends_on:
+      - stage1
+      - stage2
+    volumes:
+      - .:/workspace
+      - ./pipeline_results:/results
+    working_dir: /workspace
+    command: >
+      bash -c "
+        pip install pandas scipy numpy -q &&
+        python metrics/aggregate_pipeline_metrics.py
+          --results-dir /results
+          --output /results/final_report.json
+          --ground-truth defect_seeding/ground_truth.json &&
+        python metrics/generate_comparison_report.py
+          --metrics /results/final_report.json
+          --output /results/comparison_report.md &&
+        echo '✅ Pipeline complete. See pipeline_results/comparison_report.md'
+      "
+    networks:
+      - pipeline_net
+
+networks:
+  pipeline_net:
+    driver: bridge

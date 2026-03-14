@@ -1,0 +1,73 @@
+{
+  "tool": "carla_custom_rules",
+  "files_analyzed": 227,
+  "total_violations": 4,
+  "severity_counts": {
+    "BLOCKER": 2,
+    "CRITICAL": 2,
+    "MAJOR": 0,
+    "MINOR": 0
+  },
+  "results": [
+    {
+      "file": "test_projects/leaderboard/leaderboard/autoagents/log_agent.py",
+      "violations": [
+        {
+          "rule_id": "CRL-001",
+          "severity": "CRITICAL",
+          "category": "Resource Management",
+          "file": "test_projects/leaderboard/leaderboard/autoagents/log_agent.py",
+          "line": 145,
+          "message": "Actor spawned at line 145 but no destroy() call found in file. This causes memory leaks and orphaned actors in the CARLA server.",
+          "snippet": "self._obstacle_sensor = world.spawn_actor("
+        }
+      ],
+      "analysis_time_ms": 6.194591522216797
+    },
+    {
+      "file": "test_projects/scenario_runner/no_rendering_mode.py",
+      "violations": [
+        {
+          "rule_id": "CRL-002",
+          "severity": "BLOCKER",
+          "category": "API Misuse",
+          "file": "test_projects/scenario_runner/no_rendering_mode.py",
+          "line": 1004,
+          "message": "world.tick() called inside a sensor callback. This causes a deadlock in synchronous mode.",
+          "snippet": "self.server_clock.tick()"
+        }
+      ],
+      "analysis_time_ms": 26.625871658325195
+    },
+    {
+      "file": "test_projects/scenario_runner/manual_control.py",
+      "violations": [
+        {
+          "rule_id": "CRL-002",
+          "severity": "BLOCKER",
+          "category": "API Misuse",
+          "file": "test_projects/scenario_runner/manual_control.py",
+          "line": 393,
+          "message": "world.tick() called inside a sensor callback. This causes a deadlock in synchronous mode.",
+          "snippet": "self._server_clock.tick()"
+        }
+      ],
+      "analysis_time_ms": 19.107341766357422
+    },
+    {
+      "file": "test_projects/scenario_runner/srunner/tests/carla_mocks/carla.py",
+      "violations": [
+        {
+          "rule_id": "CRL-001",
+          "severity": "CRITICAL",
+          "category": "Resource Management",
+          "file": "test_projects/scenario_runner/srunner/tests/carla_mocks/carla.py",
+          "line": 277,
+          "message": "Actor spawned at line 277 but no destroy() call found in file. This causes memory leaks and orphaned actors in the CARLA server.",
+          "snippet": "new_actor = self.try_spawn_actor(blueprint, spawn_point)"
+        }
+      ],
+      "analysis_time_ms": 2.290010452270508
+    }
+  ]
+}

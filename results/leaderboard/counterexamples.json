@@ -1,0 +1,1987 @@
+{
+  "model_file": "results/leaderboard/agent_model_seeded.smv",
+  "check_time_sec": 2.679187059402466,
+  "properties_checked": 7,
+  "violations_found": 6,
+  "failures": [
+    {
+      "property_name": "ttc_threshold",
+      "file": "results/leaderboard/agent_model_seeded.smv",
+      "line": 0,
+      "steps": 87,
+      "category": "Robustness Failure"
+    },
+    {
+      "property_name": "urban_speed_limit",
+      "file": "results/leaderboard/agent_model_seeded.smv",
+      "line": 0,
+      "steps": 68,
+      "category": "Logic Error"
+    },
+    {
+      "property_name": "red_light_compliance",
+      "file": "results/leaderboard/agent_model_seeded.smv",
+      "line": 0,
+      "steps": 8,
+      "category": "Logic Error"
+    },
+    {
+      "property_name": "property_5",
+      "file": "results/leaderboard/agent_model_seeded.smv",
+      "line": 0,
+      "steps": 57,
+      "category": "Logic Error"
+    },
+    {
+      "property_name": "pedestrian_safety",
+      "file": "results/leaderboard/agent_model_seeded.smv",
+      "line": 0,
+      "steps": 7,
+      "category": "Robustness Failure"
+    },
+    {
+      "property_name": "agent_moves",
+      "file": "results/leaderboard/agent_model_seeded.smv",
+      "line": 0,
+      "steps": 2,
+      "category": "Logic Error"
+    }
+  ],
+  "raw_results": [
+    {
+      "property_name": "ttc_threshold",
+      "property_ltl": "G time_to_collision > 1500",
+      "result": "violated",
+      "check_time_sec": 0.0,
+      "counterexample": {
+        "property_name": "ttc_threshold",
+        "property_ltl": "G time_to_collision > 1500",
+        "violated": true,
+        "steps": [
+          {
+            "step": 1,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "30",
+              "following_distance": "50",
+              "time_to_collision": "10000",
+              "traffic_light_state": "green",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "FALSE",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE",
+              "collision_occurred": "FALSE",
+              "pedestrian_in_path": "FALSE",
+              "sensor_available": "TRUE"
+            }
+          },
+          {
+            "step": 2,
+            "variables": {
+              "target_speed": "0",
+              "traffic_light_state": "yellow",
+              "sensor_available": "FALSE"
+            }
+          },
+          {
+            "step": 3,
+            "variables": {
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 4,
+            "variables": {
+              "vehicle_speed": "1",
+              "following_distance": "49"
+            }
+          },
+          {
+            "step": 5,
+            "variables": {
+              "vehicle_speed": "2",
+              "target_speed": "1",
+              "following_distance": "48",
+              "time_to_collision": "5000"
+            }
+          },
+          {
+            "step": 6,
+            "variables": {
+              "vehicle_speed": "3",
+              "target_speed": "0",
+              "following_distance": "47"
+            }
+          },
+          {
+            "step": 7,
+            "variables": {
+              "vehicle_speed": "4",
+              "target_speed": "1",
+              "following_distance": "46"
+            }
+          },
+          {
+            "step": 8,
+            "variables": {
+              "vehicle_speed": "5",
+              "target_speed": "2",
+              "following_distance": "45"
+            }
+          },
+          {
+            "step": 9,
+            "variables": {
+              "vehicle_speed": "6",
+              "target_speed": "3",
+              "following_distance": "44"
+            }
+          },
+          {
+            "step": 10,
+            "variables": {
+              "vehicle_speed": "7",
+              "target_speed": "0",
+              "following_distance": "43"
+            }
+          },
+          {
+            "step": 11,
+            "variables": {
+              "vehicle_speed": "8",
+              "target_speed": "1",
+              "following_distance": "42"
+            }
+          },
+          {
+            "step": 12,
+            "variables": {
+              "vehicle_speed": "9",
+              "target_speed": "2",
+              "following_distance": "41"
+            }
+          },
+          {
+            "step": 13,
+            "variables": {
+              "vehicle_speed": "10",
+              "target_speed": "3",
+              "following_distance": "40"
+            }
+          },
+          {
+            "step": 14,
+            "variables": {
+              "vehicle_speed": "11",
+              "target_speed": "4",
+              "following_distance": "39"
+            }
+          },
+          {
+            "step": 15,
+            "variables": {
+              "vehicle_speed": "12",
+              "target_speed": "5",
+              "following_distance": "38"
+            }
+          },
+          {
+            "step": 16,
+            "variables": {
+              "vehicle_speed": "13",
+              "target_speed": "6",
+              "following_distance": "37"
+            }
+          },
+          {
+            "step": 17,
+            "variables": {
+              "vehicle_speed": "14",
+              "target_speed": "7",
+              "following_distance": "36"
+            }
+          },
+          {
+            "step": 18,
+            "variables": {
+              "vehicle_speed": "15",
+              "target_speed": "0",
+              "following_distance": "35"
+            }
+          },
+          {
+            "step": 19,
+            "variables": {
+              "vehicle_speed": "16",
+              "target_speed": "1",
+              "following_distance": "34"
+            }
+          },
+          {
+            "step": 20,
+            "variables": {
+              "vehicle_speed": "17",
+              "target_speed": "3",
+              "following_distance": "33"
+            }
+          },
+          {
+            "step": 21,
+            "variables": {
+              "vehicle_speed": "18",
+              "following_distance": "32"
+            }
+          },
+          {
+            "step": 22,
+            "variables": {
+              "vehicle_speed": "19",
+              "target_speed": "5",
+              "following_distance": "31"
+            }
+          },
+          {
+            "step": 23,
+            "variables": {
+              "vehicle_speed": "20",
+              "following_distance": "30"
+            }
+          },
+          {
+            "step": 24,
+            "variables": {
+              "vehicle_speed": "21",
+              "target_speed": "7",
+              "following_distance": "29"
+            }
+          },
+          {
+            "step": 25,
+            "variables": {
+              "vehicle_speed": "22",
+              "following_distance": "28"
+            }
+          },
+          {
+            "step": 26,
+            "variables": {
+              "vehicle_speed": "23",
+              "target_speed": "9",
+              "following_distance": "27"
+            }
+          },
+          {
+            "step": 27,
+            "variables": {
+              "vehicle_speed": "24",
+              "following_distance": "26"
+            }
+          },
+          {
+            "step": 28,
+            "variables": {
+              "vehicle_speed": "25",
+              "target_speed": "11",
+              "following_distance": "25"
+            }
+          },
+          {
+            "step": 29,
+            "variables": {
+              "vehicle_speed": "26",
+              "following_distance": "24"
+            }
+          },
+          {
+            "step": 30,
+            "variables": {
+              "vehicle_speed": "27",
+              "target_speed": "13",
+              "following_distance": "23",
+              "road_zone": "intersection"
+            }
+          },
+          {
+            "step": 31,
+            "variables": {
+              "following_distance": "22"
+            }
+          },
+          {
+            "step": 32,
+            "variables": {
+              "following_distance": "21"
+            }
+          },
+          {
+            "step": 33,
+            "variables": {
+              "following_distance": "20"
+            }
+          },
+          {
+            "step": 34,
+            "variables": {
+              "following_distance": "19"
+            }
+          },
+          {
+            "step": 35,
+            "variables": {
+              "following_distance": "18",
+              "time_to_collision": "2000"
+            }
+          },
+          {
+            "step": 36,
+            "variables": {
+              "following_distance": "17"
+            }
+          },
+          {
+            "step": 37,
+            "variables": {
+              "following_distance": "16"
+            }
+          },
+          {
+            "step": 38,
+            "variables": {
+              "following_distance": "15"
+            }
+          },
+          {
+            "step": 39,
+            "variables": {
+              "following_distance": "14"
+            }
+          },
+          {
+            "step": 40,
+            "variables": {
+              "following_distance": "13"
+            }
+          },
+          {
+            "step": 41,
+            "variables": {
+              "following_distance": "12"
+            }
+          },
+          {
+            "step": 42,
+            "variables": {
+              "following_distance": "11"
+            }
+          },
+          {
+            "step": 43,
+            "variables": {
+              "target_speed": "29",
+              "following_distance": "10",
+              "road_zone": "parking"
+            }
+          },
+          {
+            "step": 44,
+            "variables": {
+              "target_speed": "0",
+              "following_distance": "9",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 45,
+            "variables": {
+              "time_to_collision": "1000",
+              "in_correct_lane": "FALSE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 46,
+            "variables": {
+              "brake_applied": "TRUE",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 47,
+            "variables": {
+              "vehicle_speed": "26",
+              "following_distance": "10",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 48,
+            "variables": {
+              "vehicle_speed": "25",
+              "following_distance": "11",
+              "time_to_collision": "2000"
+            }
+          },
+          {
+            "step": 49,
+            "variables": {
+              "vehicle_speed": "24",
+              "following_distance": "12"
+            }
+          },
+          {
+            "step": 50,
+            "variables": {
+              "vehicle_speed": "23",
+              "following_distance": "13"
+            }
+          },
+          {
+            "step": 51,
+            "variables": {
+              "vehicle_speed": "22",
+              "following_distance": "14"
+            }
+          },
+          {
+            "step": 52,
+            "variables": {
+              "vehicle_speed": "21",
+              "following_distance": "15"
+            }
+          },
+          {
+            "step": 53,
+            "variables": {
+              "vehicle_speed": "20",
+              "following_distance": "16"
+            }
+          },
+          {
+            "step": 54,
+            "variables": {
+              "vehicle_speed": "19",
+              "following_distance": "17"
+            }
+          },
+          {
+            "step": 55,
+            "variables": {
+              "vehicle_speed": "18",
+              "following_distance": "18"
+            }
+          },
+          {
+            "step": 56,
+            "variables": {
+              "vehicle_speed": "17",
+              "following_distance": "19"
+            }
+          },
+          {
+            "step": 57,
+            "variables": {
+              "vehicle_speed": "16",
+              "following_distance": "20"
+            }
+          },
+          {
+            "step": 58,
+            "variables": {
+              "vehicle_speed": "15",
+              "following_distance": "21",
+              "time_to_collision": "5000"
+            }
+          },
+          {
+            "step": 59,
+            "variables": {
+              "vehicle_speed": "14",
+              "following_distance": "22"
+            }
+          },
+          {
+            "step": 60,
+            "variables": {
+              "vehicle_speed": "13",
+              "following_distance": "23"
+            }
+          },
+          {
+            "step": 61,
+            "variables": {
+              "vehicle_speed": "12",
+              "following_distance": "24"
+            }
+          },
+          {
+            "step": 62,
+            "variables": {
+              "vehicle_speed": "11",
+              "following_distance": "25"
+            }
+          },
+          {
+            "step": 63,
+            "variables": {
+              "vehicle_speed": "10",
+              "following_distance": "26"
+            }
+          },
+          {
+            "step": 64,
+            "variables": {
+              "vehicle_speed": "9",
+              "following_distance": "27"
+            }
+          },
+          {
+            "step": 65,
+            "variables": {
+              "vehicle_speed": "8",
+              "following_distance": "28"
+            }
+          },
+          {
+            "step": 66,
+            "variables": {
+              "vehicle_speed": "7",
+              "following_distance": "29"
+            }
+          },
+          {
+            "step": 67,
+            "variables": {
+              "vehicle_speed": "6",
+              "following_distance": "30"
+            }
+          },
+          {
+            "step": 68,
+            "variables": {
+              "vehicle_speed": "5",
+              "following_distance": "31"
+            }
+          },
+          {
+            "step": 69,
+            "variables": {
+              "vehicle_speed": "4",
+              "following_distance": "32"
+            }
+          },
+          {
+            "step": 70,
+            "variables": {
+              "vehicle_speed": "3",
+              "following_distance": "33"
+            }
+          },
+          {
+            "step": 71,
+            "variables": {
+              "vehicle_speed": "2",
+              "following_distance": "34"
+            }
+          },
+          {
+            "step": 72,
+            "variables": {
+              "vehicle_speed": "1",
+              "following_distance": "35"
+            }
+          },
+          {
+            "step": 73,
+            "variables": {
+              "vehicle_speed": "0",
+              "following_distance": "36",
+              "road_zone": "intersection"
+            }
+          },
+          {
+            "step": 74,
+            "variables": {
+              "target_speed": "1",
+              "following_distance": "37",
+              "time_to_collision": "10000",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 75,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "38",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 76,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "1",
+              "following_distance": "39",
+              "time_to_collision": "5000",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 77,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "40",
+              "time_to_collision": "10000",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 78,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "1",
+              "following_distance": "41",
+              "time_to_collision": "5000",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 79,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "42",
+              "time_to_collision": "10000",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 80,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "1",
+              "following_distance": "43",
+              "time_to_collision": "5000",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 81,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "44",
+              "time_to_collision": "10000",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 82,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "1",
+              "following_distance": "45",
+              "time_to_collision": "5000",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 83,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "46",
+              "time_to_collision": "10000",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 84,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "1",
+              "following_distance": "47",
+              "time_to_collision": "5000",
+              "traffic_light_state": "red",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 85,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "48",
+              "time_to_collision": "10000",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 86,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "1",
+              "following_distance": "49",
+              "time_to_collision": "5000",
+              "traffic_light_state": "green",
+              "road_zone": "parking"
+            }
+          },
+          {
+            "step": 87,
+            "variables": {
+              "target_speed": "30",
+              "following_distance": "50",
+              "time_to_collision": "10000",
+              "road_zone": "urban",
+              "brake_applied": "FALSE",
+              "sensor_available": "TRUE"
+            }
+          }
+        ],
+        "loop_start": null
+      }
+    },
+    {
+      "property_name": "urban_speed_limit",
+      "property_ltl": "G (road_zone = urban -> vehicle_speed <= 50)",
+      "result": "violated",
+      "check_time_sec": 0.0,
+      "counterexample": {
+        "property_name": "urban_speed_limit",
+        "property_ltl": "G (road_zone = urban -> vehicle_speed <= 50)",
+        "violated": true,
+        "steps": [
+          {
+            "step": 1,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "30",
+              "following_distance": "50",
+              "time_to_collision": "10000",
+              "traffic_light_state": "green",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "FALSE",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE",
+              "collision_occurred": "FALSE",
+              "pedestrian_in_path": "FALSE",
+              "sensor_available": "TRUE"
+            }
+          },
+          {
+            "step": 2,
+            "variables": {
+              "target_speed": "0",
+              "traffic_light_state": "yellow",
+              "brake_applied": "TRUE",
+              "sensor_available": "FALSE"
+            }
+          },
+          {
+            "step": 3,
+            "variables": {
+              "following_distance": "51",
+              "road_zone": "intersection"
+            }
+          },
+          {
+            "step": 4,
+            "variables": {
+              "target_speed": "1",
+              "following_distance": "52",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 5,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "53",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 6,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "1",
+              "following_distance": "54",
+              "time_to_collision": "5000",
+              "road_zone": "highway",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 7,
+            "variables": {
+              "vehicle_speed": "1",
+              "target_speed": "0",
+              "following_distance": "55",
+              "time_to_collision": "10000",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE"
+            }
+          },
+          {
+            "step": 8,
+            "variables": {
+              "vehicle_speed": "0",
+              "following_distance": "56",
+              "time_to_collision": "5000",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 9,
+            "variables": {
+              "vehicle_speed": "1",
+              "following_distance": "57",
+              "time_to_collision": "10000",
+              "brake_applied": "FALSE"
+            }
+          },
+          {
+            "step": 10,
+            "variables": {
+              "vehicle_speed": "2",
+              "target_speed": "1",
+              "following_distance": "56",
+              "time_to_collision": "5000"
+            }
+          },
+          {
+            "step": 11,
+            "variables": {
+              "vehicle_speed": "3",
+              "target_speed": "0",
+              "following_distance": "55"
+            }
+          },
+          {
+            "step": 12,
+            "variables": {
+              "vehicle_speed": "4",
+              "target_speed": "1",
+              "following_distance": "54"
+            }
+          },
+          {
+            "step": 13,
+            "variables": {
+              "vehicle_speed": "5",
+              "target_speed": "2",
+              "following_distance": "53"
+            }
+          },
+          {
+            "step": 14,
+            "variables": {
+              "vehicle_speed": "6",
+              "target_speed": "3",
+              "following_distance": "52"
+            }
+          },
+          {
+            "step": 15,
+            "variables": {
+              "vehicle_speed": "7",
+              "target_speed": "0",
+              "following_distance": "51"
+            }
+          },
+          {
+            "step": 16,
+            "variables": {
+              "vehicle_speed": "8",
+              "target_speed": "1",
+              "following_distance": "50"
+            }
+          },
+          {
+            "step": 17,
+            "variables": {
+              "vehicle_speed": "9",
+              "target_speed": "2",
+              "following_distance": "49"
+            }
+          },
+          {
+            "step": 18,
+            "variables": {
+              "vehicle_speed": "10",
+              "target_speed": "3",
+              "following_distance": "48"
+            }
+          },
+          {
+            "step": 19,
+            "variables": {
+              "vehicle_speed": "11",
+              "target_speed": "4",
+              "following_distance": "47"
+            }
+          },
+          {
+            "step": 20,
+            "variables": {
+              "vehicle_speed": "12",
+              "target_speed": "5",
+              "following_distance": "46"
+            }
+          },
+          {
+            "step": 21,
+            "variables": {
+              "vehicle_speed": "13",
+              "target_speed": "6",
+              "following_distance": "45"
+            }
+          },
+          {
+            "step": 22,
+            "variables": {
+              "vehicle_speed": "14",
+              "target_speed": "7",
+              "following_distance": "44"
+            }
+          },
+          {
+            "step": 23,
+            "variables": {
+              "vehicle_speed": "15",
+              "target_speed": "0",
+              "following_distance": "43"
+            }
+          },
+          {
+            "step": 24,
+            "variables": {
+              "vehicle_speed": "16",
+              "target_speed": "1",
+              "following_distance": "42"
+            }
+          },
+          {
+            "step": 25,
+            "variables": {
+              "vehicle_speed": "17",
+              "target_speed": "3",
+              "following_distance": "41"
+            }
+          },
+          {
+            "step": 26,
+            "variables": {
+              "vehicle_speed": "18",
+              "following_distance": "40"
+            }
+          },
+          {
+            "step": 27,
+            "variables": {
+              "vehicle_speed": "19",
+              "target_speed": "5",
+              "following_distance": "39"
+            }
+          },
+          {
+            "step": 28,
+            "variables": {
+              "vehicle_speed": "20",
+              "following_distance": "38"
+            }
+          },
+          {
+            "step": 29,
+            "variables": {
+              "vehicle_speed": "21",
+              "target_speed": "7",
+              "following_distance": "37"
+            }
+          },
+          {
+            "step": 30,
+            "variables": {
+              "vehicle_speed": "22",
+              "following_distance": "36"
+            }
+          },
+          {
+            "step": 31,
+            "variables": {
+              "vehicle_speed": "23",
+              "target_speed": "9",
+              "following_distance": "35"
+            }
+          },
+          {
+            "step": 32,
+            "variables": {
+              "vehicle_speed": "24",
+              "following_distance": "34"
+            }
+          },
+          {
+            "step": 33,
+            "variables": {
+              "vehicle_speed": "25",
+              "target_speed": "11",
+              "following_distance": "33"
+            }
+          },
+          {
+            "step": 34,
+            "variables": {
+              "vehicle_speed": "26",
+              "following_distance": "32"
+            }
+          },
+          {
+            "step": 35,
+            "variables": {
+              "vehicle_speed": "27",
+              "target_speed": "13",
+              "following_distance": "31"
+            }
+          },
+          {
+            "step": 36,
+            "variables": {
+              "vehicle_speed": "28",
+              "following_distance": "30"
+            }
+          },
+          {
+            "step": 37,
+            "variables": {
+              "vehicle_speed": "29",
+              "target_speed": "15",
+              "following_distance": "29"
+            }
+          },
+          {
+            "step": 38,
+            "variables": {
+              "vehicle_speed": "30",
+              "following_distance": "28"
+            }
+          },
+          {
+            "step": 39,
+            "variables": {
+              "vehicle_speed": "31",
+              "target_speed": "17",
+              "following_distance": "27"
+            }
+          },
+          {
+            "step": 40,
+            "variables": {
+              "vehicle_speed": "32",
+              "following_distance": "26"
+            }
+          },
+          {
+            "step": 41,
+            "variables": {
+              "vehicle_speed": "33",
+              "target_speed": "19",
+              "following_distance": "25"
+            }
+          },
+          {
+            "step": 42,
+            "variables": {
+              "vehicle_speed": "34",
+              "following_distance": "24"
+            }
+          },
+          {
+            "step": 43,
+            "variables": {
+              "vehicle_speed": "35",
+              "target_speed": "21",
+              "following_distance": "23"
+            }
+          },
+          {
+            "step": 44,
+            "variables": {
+              "vehicle_speed": "36",
+              "following_distance": "22"
+            }
+          },
+          {
+            "step": 45,
+            "variables": {
+              "vehicle_speed": "37",
+              "target_speed": "23",
+              "following_distance": "21"
+            }
+          },
+          {
+            "step": 46,
+            "variables": {
+              "vehicle_speed": "38",
+              "following_distance": "20"
+            }
+          },
+          {
+            "step": 47,
+            "variables": {
+              "vehicle_speed": "39",
+              "target_speed": "25",
+              "following_distance": "19"
+            }
+          },
+          {
+            "step": 48,
+            "variables": {
+              "vehicle_speed": "40",
+              "following_distance": "18",
+              "time_to_collision": "2000"
+            }
+          },
+          {
+            "step": 49,
+            "variables": {
+              "vehicle_speed": "41",
+              "target_speed": "27",
+              "following_distance": "17"
+            }
+          },
+          {
+            "step": 50,
+            "variables": {
+              "vehicle_speed": "42",
+              "following_distance": "16"
+            }
+          },
+          {
+            "step": 51,
+            "variables": {
+              "vehicle_speed": "43",
+              "target_speed": "29",
+              "following_distance": "15"
+            }
+          },
+          {
+            "step": 52,
+            "variables": {
+              "vehicle_speed": "44",
+              "following_distance": "14"
+            }
+          },
+          {
+            "step": 53,
+            "variables": {
+              "vehicle_speed": "45",
+              "target_speed": "31",
+              "following_distance": "13"
+            }
+          },
+          {
+            "step": 54,
+            "variables": {
+              "vehicle_speed": "46",
+              "following_distance": "12"
+            }
+          },
+          {
+            "step": 55,
+            "variables": {
+              "vehicle_speed": "47",
+              "target_speed": "17",
+              "following_distance": "11"
+            }
+          },
+          {
+            "step": 56,
+            "variables": {
+              "vehicle_speed": "48",
+              "following_distance": "10"
+            }
+          },
+          {
+            "step": 57,
+            "variables": {
+              "vehicle_speed": "49",
+              "target_speed": "19",
+              "following_distance": "9"
+            }
+          },
+          {
+            "step": 58,
+            "variables": {
+              "vehicle_speed": "50",
+              "target_speed": "0",
+              "following_distance": "8",
+              "time_to_collision": "1000",
+              "road_zone": "highway",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 59,
+            "variables": {
+              "vehicle_speed": "51",
+              "following_distance": "7",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "TRUE",
+              "in_correct_lane": "FALSE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 60,
+            "variables": {
+              "vehicle_speed": "50",
+              "following_distance": "8",
+              "traffic_light_state": "red"
+            }
+          },
+          {
+            "step": 61,
+            "variables": {
+              "vehicle_speed": "49",
+              "following_distance": "9",
+              "traffic_light_state": "green",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 62,
+            "variables": {
+              "vehicle_speed": "48",
+              "following_distance": "10",
+              "traffic_light_state": "yellow",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 63,
+            "variables": {
+              "vehicle_speed": "47",
+              "target_speed": "17",
+              "following_distance": "11",
+              "time_to_collision": "2000"
+            }
+          },
+          {
+            "step": 64,
+            "variables": {
+              "vehicle_speed": "46",
+              "target_speed": "31",
+              "following_distance": "12",
+              "throttle_applied": "TRUE",
+              "brake_applied": "FALSE"
+            }
+          },
+          {
+            "step": 65,
+            "variables": {
+              "vehicle_speed": "47",
+              "target_speed": "17",
+              "following_distance": "11"
+            }
+          },
+          {
+            "step": 66,
+            "variables": {
+              "vehicle_speed": "48",
+              "following_distance": "10"
+            }
+          },
+          {
+            "step": 67,
+            "variables": {
+              "vehicle_speed": "49",
+              "target_speed": "51",
+              "following_distance": "9",
+              "traffic_light_state": "red",
+              "road_zone": "highway",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 68,
+            "variables": {
+              "vehicle_speed": "50",
+              "target_speed": "0",
+              "following_distance": "8",
+              "time_to_collision": "1000",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "TRUE",
+              "in_correct_lane": "FALSE",
+              "lane_change_active": "FALSE"
+            }
+          }
+        ],
+        "loop_start": 59
+      }
+    },
+    {
+      "property_name": "red_light_compliance",
+      "property_ltl": "G (traffic_light_state = red -> brake_applied)",
+      "result": "violated",
+      "check_time_sec": 0.0,
+      "counterexample": {
+        "property_name": "red_light_compliance",
+        "property_ltl": "G (traffic_light_state = red -> brake_applied)",
+        "violated": true,
+        "steps": [
+          {
+            "step": 1,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "30",
+              "following_distance": "50",
+              "time_to_collision": "10000",
+              "traffic_light_state": "green",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "FALSE",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE",
+              "collision_occurred": "FALSE",
+              "pedestrian_in_path": "FALSE",
+              "sensor_available": "TRUE"
+            }
+          },
+          {
+            "step": 2,
+            "variables": {
+              "target_speed": "0",
+              "traffic_light_state": "yellow",
+              "lane_change_active": "TRUE",
+              "sensor_available": "FALSE"
+            }
+          },
+          {
+            "step": 3,
+            "variables": {
+              "traffic_light_state": "red",
+              "in_correct_lane": "FALSE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 4,
+            "variables": {
+              "brake_applied": "TRUE"
+            }
+          },
+          {
+            "step": 5,
+            "variables": {
+              "following_distance": "51",
+              "traffic_light_state": "green",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 6,
+            "variables": {
+              "following_distance": "52",
+              "traffic_light_state": "yellow",
+              "road_zone": "intersection",
+              "throttle_applied": "TRUE",
+              "brake_applied": "FALSE",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 7,
+            "variables": {
+              "target_speed": "1",
+              "following_distance": "51",
+              "road_zone": "parking",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 8,
+            "variables": {
+              "target_speed": "0",
+              "following_distance": "50",
+              "traffic_light_state": "red",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "TRUE",
+              "in_correct_lane": "FALSE",
+              "lane_change_active": "FALSE"
+            }
+          }
+        ],
+        "loop_start": 3
+      }
+    },
+    {
+      "property_name": "no_collision",
+      "property_ltl": "G !collision_occurred",
+      "result": "satisfied",
+      "check_time_sec": 0.0
+    },
+    {
+      "property_name": "property_5",
+      "property_ltl": "G following_distance >= 5",
+      "result": "violated",
+      "check_time_sec": 0.0,
+      "counterexample": {
+        "property_name": "property_5",
+        "property_ltl": "G following_distance >= 5",
+        "violated": true,
+        "steps": [
+          {
+            "step": 1,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "30",
+              "following_distance": "50",
+              "time_to_collision": "10000",
+              "traffic_light_state": "green",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "FALSE",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE",
+              "collision_occurred": "FALSE",
+              "pedestrian_in_path": "FALSE",
+              "sensor_available": "TRUE"
+            }
+          },
+          {
+            "step": 2,
+            "variables": {
+              "target_speed": "0",
+              "traffic_light_state": "yellow",
+              "sensor_available": "FALSE"
+            }
+          },
+          {
+            "step": 3,
+            "variables": {
+              "road_zone": "intersection",
+              "throttle_applied": "TRUE"
+            }
+          },
+          {
+            "step": 4,
+            "variables": {
+              "following_distance": "49"
+            }
+          },
+          {
+            "step": 5,
+            "variables": {
+              "following_distance": "48"
+            }
+          },
+          {
+            "step": 6,
+            "variables": {
+              "following_distance": "47"
+            }
+          },
+          {
+            "step": 7,
+            "variables": {
+              "following_distance": "46"
+            }
+          },
+          {
+            "step": 8,
+            "variables": {
+              "following_distance": "45"
+            }
+          },
+          {
+            "step": 9,
+            "variables": {
+              "following_distance": "44"
+            }
+          },
+          {
+            "step": 10,
+            "variables": {
+              "following_distance": "43"
+            }
+          },
+          {
+            "step": 11,
+            "variables": {
+              "following_distance": "42"
+            }
+          },
+          {
+            "step": 12,
+            "variables": {
+              "following_distance": "41"
+            }
+          },
+          {
+            "step": 13,
+            "variables": {
+              "following_distance": "40"
+            }
+          },
+          {
+            "step": 14,
+            "variables": {
+              "following_distance": "39"
+            }
+          },
+          {
+            "step": 15,
+            "variables": {
+              "following_distance": "38"
+            }
+          },
+          {
+            "step": 16,
+            "variables": {
+              "following_distance": "37"
+            }
+          },
+          {
+            "step": 17,
+            "variables": {
+              "following_distance": "36"
+            }
+          },
+          {
+            "step": 18,
+            "variables": {
+              "following_distance": "35"
+            }
+          },
+          {
+            "step": 19,
+            "variables": {
+              "following_distance": "34"
+            }
+          },
+          {
+            "step": 20,
+            "variables": {
+              "following_distance": "33"
+            }
+          },
+          {
+            "step": 21,
+            "variables": {
+              "following_distance": "32"
+            }
+          },
+          {
+            "step": 22,
+            "variables": {
+              "following_distance": "31"
+            }
+          },
+          {
+            "step": 23,
+            "variables": {
+              "following_distance": "30"
+            }
+          },
+          {
+            "step": 24,
+            "variables": {
+              "following_distance": "29"
+            }
+          },
+          {
+            "step": 25,
+            "variables": {
+              "following_distance": "28"
+            }
+          },
+          {
+            "step": 26,
+            "variables": {
+              "following_distance": "27"
+            }
+          },
+          {
+            "step": 27,
+            "variables": {
+              "following_distance": "26"
+            }
+          },
+          {
+            "step": 28,
+            "variables": {
+              "following_distance": "25"
+            }
+          },
+          {
+            "step": 29,
+            "variables": {
+              "following_distance": "24"
+            }
+          },
+          {
+            "step": 30,
+            "variables": {
+              "following_distance": "23"
+            }
+          },
+          {
+            "step": 31,
+            "variables": {
+              "following_distance": "22"
+            }
+          },
+          {
+            "step": 32,
+            "variables": {
+              "following_distance": "21"
+            }
+          },
+          {
+            "step": 33,
+            "variables": {
+              "following_distance": "20"
+            }
+          },
+          {
+            "step": 34,
+            "variables": {
+              "following_distance": "19"
+            }
+          },
+          {
+            "step": 35,
+            "variables": {
+              "following_distance": "18"
+            }
+          },
+          {
+            "step": 36,
+            "variables": {
+              "following_distance": "17"
+            }
+          },
+          {
+            "step": 37,
+            "variables": {
+              "following_distance": "16"
+            }
+          },
+          {
+            "step": 38,
+            "variables": {
+              "following_distance": "15"
+            }
+          },
+          {
+            "step": 39,
+            "variables": {
+              "following_distance": "14"
+            }
+          },
+          {
+            "step": 40,
+            "variables": {
+              "following_distance": "13"
+            }
+          },
+          {
+            "step": 41,
+            "variables": {
+              "following_distance": "12"
+            }
+          },
+          {
+            "step": 42,
+            "variables": {
+              "following_distance": "11"
+            }
+          },
+          {
+            "step": 43,
+            "variables": {
+              "following_distance": "10"
+            }
+          },
+          {
+            "step": 44,
+            "variables": {
+              "following_distance": "9"
+            }
+          },
+          {
+            "step": 45,
+            "variables": {
+              "following_distance": "8"
+            }
+          },
+          {
+            "step": 46,
+            "variables": {
+              "following_distance": "7",
+              "road_zone": "urban"
+            }
+          },
+          {
+            "step": 47,
+            "variables": {
+              "vehicle_speed": "1",
+              "following_distance": "6"
+            }
+          },
+          {
+            "step": 48,
+            "variables": {
+              "vehicle_speed": "2",
+              "target_speed": "3",
+              "following_distance": "5",
+              "time_to_collision": "1000",
+              "road_zone": "highway",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 49,
+            "variables": {
+              "vehicle_speed": "3",
+              "target_speed": "0",
+              "following_distance": "4",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "TRUE",
+              "in_correct_lane": "FALSE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 50,
+            "variables": {
+              "vehicle_speed": "2",
+              "following_distance": "5",
+              "time_to_collision": "500",
+              "traffic_light_state": "red"
+            }
+          },
+          {
+            "step": 51,
+            "variables": {
+              "vehicle_speed": "1",
+              "following_distance": "6",
+              "time_to_collision": "1000"
+            }
+          },
+          {
+            "step": 52,
+            "variables": {
+              "vehicle_speed": "0",
+              "following_distance": "7",
+              "traffic_light_state": "green",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 53,
+            "variables": {
+              "following_distance": "8",
+              "time_to_collision": "10000",
+              "traffic_light_state": "yellow",
+              "road_zone": "intersection",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE"
+            }
+          },
+          {
+            "step": 54,
+            "variables": {
+              "following_distance": "9",
+              "road_zone": "urban",
+              "throttle_applied": "TRUE",
+              "brake_applied": "FALSE"
+            }
+          },
+          {
+            "step": 55,
+            "variables": {
+              "vehicle_speed": "1",
+              "following_distance": "8",
+              "road_zone": "intersection"
+            }
+          },
+          {
+            "step": 56,
+            "variables": {
+              "target_speed": "2",
+              "following_distance": "7",
+              "time_to_collision": "1000",
+              "traffic_light_state": "red",
+              "road_zone": "parking",
+              "lane_change_active": "TRUE"
+            }
+          },
+          {
+            "step": 57,
+            "variables": {
+              "target_speed": "0",
+              "following_distance": "6",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "TRUE",
+              "in_correct_lane": "FALSE",
+              "lane_change_active": "FALSE"
+            }
+          }
+        ],
+        "loop_start": 50
+      }
+    },
+    {
+      "property_name": "pedestrian_safety",
+      "property_ltl": "G (pedestrian_in_path -> brake_applied)",
+      "result": "violated",
+      "check_time_sec": 0.0,
+      "counterexample": {
+        "property_name": "pedestrian_safety",
+        "property_ltl": "G (pedestrian_in_path -> brake_applied)",
+        "violated": true,
+        "steps": [
+          {
+            "step": 1,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "30",
+              "following_distance": "50",
+              "time_to_collision": "10000",
+              "traffic_light_state": "green",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "FALSE",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE",
+              "collision_occurred": "FALSE",
+              "pedestrian_in_path": "FALSE",
+              "sensor_available": "TRUE"
+            }
+          },
+          {
+            "step": 2,
+            "variables": {
+              "target_speed": "0",
+              "traffic_light_state": "yellow",
+              "pedestrian_in_path": "TRUE",
+              "sensor_available": "FALSE"
+            }
+          },
+          {
+            "step": 3,
+            "variables": {
+              "traffic_light_state": "red",
+              "brake_applied": "TRUE",
+              "pedestrian_in_path": "FALSE"
+            }
+          },
+          {
+            "step": 4,
+            "variables": {
+              "following_distance": "51",
+              "traffic_light_state": "green"
+            }
+          },
+          {
+            "step": 5,
+            "variables": {
+              "following_distance": "52",
+              "traffic_light_state": "yellow",
+              "road_zone": "intersection",
+              "throttle_applied": "TRUE",
+              "brake_applied": "FALSE"
+            }
+          },
+          {
+            "step": 6,
+            "variables": {
+              "target_speed": "1",
+              "following_distance": "51",
+              "traffic_light_state": "red",
+              "road_zone": "parking"
+            }
+          },
+          {
+            "step": 7,
+            "variables": {
+              "target_speed": "0",
+              "following_distance": "50",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "TRUE"
+            }
+          }
+        ],
+        "loop_start": 2
+      }
+    },
+    {
+      "property_name": "agent_moves",
+      "property_ltl": "F vehicle_speed > 0",
+      "result": "violated",
+      "check_time_sec": 0.0,
+      "counterexample": {
+        "property_name": "agent_moves",
+        "property_ltl": "F vehicle_speed > 0",
+        "violated": true,
+        "steps": [
+          {
+            "step": 1,
+            "variables": {
+              "vehicle_speed": "0",
+              "target_speed": "30",
+              "following_distance": "50",
+              "time_to_collision": "10000",
+              "traffic_light_state": "green",
+              "road_zone": "urban",
+              "throttle_applied": "FALSE",
+              "brake_applied": "FALSE",
+              "in_correct_lane": "TRUE",
+              "lane_change_active": "FALSE",
+              "collision_occurred": "FALSE",
+              "pedestrian_in_path": "FALSE",
+              "sensor_available": "TRUE"
+            }
+          },
+          {
+            "step": 2,
+            "variables": {}
+          }
+        ],
+        "loop_start": null
+      }
+    }
+  ]
+}

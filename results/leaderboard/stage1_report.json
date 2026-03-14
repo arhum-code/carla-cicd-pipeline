@@ -1,0 +1,43 @@
+{
+  "tool": "carla_custom_rules",
+  "files_analyzed": 35,
+  "total_violations": 2,
+  "severity_counts": {
+    "BLOCKER": 0,
+    "CRITICAL": 2,
+    "MAJOR": 0,
+    "MINOR": 0
+  },
+  "results": [
+    {
+      "file": "test_projects/leaderboard/leaderboard/autoagents/log_agent.py",
+      "violations": [
+        {
+          "rule_id": "CRL-001",
+          "severity": "CRITICAL",
+          "category": "Resource Management",
+          "file": "test_projects/leaderboard/leaderboard/autoagents/log_agent.py",
+          "line": 145,
+          "message": "Actor spawned at line 145 but no destroy() call found in file. This causes memory leaks and orphaned actors in the CARLA server.",
+          "snippet": "self._obstacle_sensor = world.spawn_actor("
+        }
+      ],
+      "analysis_time_ms": 6.53839111328125
+    },
+    {
+      "file": "test_projects/leaderboard/leaderboard/autoagents/agent_wrapper.py",
+      "violations": [
+        {
+          "rule_id": "CRL-001",
+          "severity": "CRITICAL",
+          "category": "Resource Management",
+          "file": "test_projects/leaderboard/leaderboard/autoagents/agent_wrapper.py",
+          "line": 253,
+          "message": "Actor spawned at line 253 but no destroy() call found in file. This causes memory leaks and orphaned actors in the CARLA server.",
+          "snippet": "sensor = CarlaDataProvider.get_world().spawn_actor(bp, sensor_transform, vehicle)"
+        }
+      ],
+      "analysis_time_ms": 4.317760467529297
+    }
+  ]
+}

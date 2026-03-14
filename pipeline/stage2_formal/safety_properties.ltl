@@ -1,0 +1,40 @@
+-- Safety Properties for CARLA Agent Verification
+-- Specified in Linear Temporal Logic (LTL) for nuXmv
+-- Each property encodes a safety requirement the agent must satisfy.
+--
+-- Format: LTLSPEC NAME
+-- Reference: VIVAS framework [Goyal et al., 2025]
+
+-- Property 1: Minimum time-to-collision
+-- The ego vehicle must never reach a time-to-collision below 1.5 seconds
+LTLSPEC NAME ttc_min_1500ms :=
+  G (time_to_collision > 1500)
+
+-- Property 2: Speed limit compliance  
+-- The ego vehicle must never exceed 50 km/h in urban zones
+LTLSPEC NAME urban_speed_limit :=
+  G (in_urban_zone -> vehicle_speed <= 50)
+
+-- Property 3: Lane keeping
+-- The vehicle must not cross solid lane markings
+LTLSPEC NAME lane_keeping :=
+  G !(crossing_solid_line)
+
+-- Property 4: Red light compliance
+-- Vehicle must be stopped when traffic light is red
+LTLSPEC NAME red_light_stop :=
+  G (traffic_light_red -> vehicle_speed = 0)
+
+-- Property 5: Safe following distance
+-- Must maintain at least 5 metres following distance
+LTLSPEC NAME safe_following :=
+  G (following_distance >= 5)
+
+-- Property 6: No collision with pedestrians
+LTLSPEC NAME no_pedestrian_collision :=
+  G !(collision_with_pedestrian)
+
+-- Property 7: Eventual goal achievement (liveness)
+-- The agent must eventually reach its destination
+LTLSPEC NAME reaches_destination :=
+  F (at_destination)

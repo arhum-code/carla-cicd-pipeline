@@ -1,0 +1,23 @@
+# Safety Requirements for LLM Scenario Generation
+# Each requirement is used as input to GPT-4 to generate
+# edge-case OpenSCENARIO test scenarios.
+
+REQ-001: The autonomous vehicle must stop within 3 seconds when a pedestrian enters the lane at any speed.
+
+REQ-002: The vehicle must not enter an intersection when the traffic light has been red for more than 0.5 seconds.
+
+REQ-003: When visibility drops below 30 metres due to fog or rain, the vehicle must reduce speed to below 20 km/h.
+
+REQ-004: The vehicle must maintain a minimum following distance of 5 metres from the vehicle ahead at all times.
+
+REQ-005: When a lead vehicle brakes suddenly (deceleration > 5 m/s²), the ego vehicle must initiate braking within 500 milliseconds.
+
+REQ-006: The vehicle must not execute a lane change if an adjacent vehicle is within 10 metres in the target lane.
+
+REQ-007: At uncontrolled intersections, the vehicle must yield to vehicles approaching from the right.
+
+REQ-008: The vehicle must not exceed the posted speed limit by more than 5 km/h under any condition.
+
+REQ-009: Emergency vehicles with sirens active must cause the ego vehicle to pull over within 10 seconds.
+
+REQ-010: The vehicle must handle GPS signal loss for up to 5 seconds using dead reckoning without leaving its lane.

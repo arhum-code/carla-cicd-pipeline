@@ -1,0 +1,78 @@
+{
+  "stage": 1,
+  "gate_passed": false,
+  "gate_reason": "4 BLOCKER-level defect(s) must be resolved before simulation.",
+  "total_violations": 5,
+  "blocker_count": 4,
+  "critical_count": 1,
+  "severity_counts": {
+    "BLOCKER": 4,
+    "CRITICAL": 1,
+    "MAJOR": 0,
+    "MINOR": 0,
+    "INFO": 0
+  },
+  "category_counts": {
+    "API Misuse": 2,
+    "Resource Management": 1,
+    "Scenario Specification": 2
+  },
+  "violations": [
+    {
+      "tool": "carla_custom_rules",
+      "rule_id": "CRL-002",
+      "severity": "BLOCKER",
+      "category": "API Misuse",
+      "file": "test_projects/scenario_runner/no_rendering_mode.py",
+      "line": 1004,
+      "message": "world.tick() called inside a sensor callback. This causes a deadlock in synchronous mode.",
+      "snippet": "self.server_clock.tick()"
+    },
+    {
+      "tool": "carla_custom_rules",
+      "rule_id": "CRL-002",
+      "severity": "BLOCKER",
+      "category": "API Misuse",
+      "file": "test_projects/scenario_runner/manual_control.py",
+      "line": 393,
+      "message": "world.tick() called inside a sensor callback. This causes a deadlock in synchronous mode.",
+      "snippet": "self._server_clock.tick()"
+    },
+    {
+      "tool": "carla_custom_rules",
+      "rule_id": "CRL-001",
+      "severity": "CRITICAL",
+      "category": "Resource Management",
+      "file": "test_projects/scenario_runner/srunner/tests/carla_mocks/carla.py",
+      "line": 277,
+      "message": "Actor spawned at line 277 but no destroy() call found in file. This causes memory leaks and orphaned actors in the CARLA server.",
+      "snippet": "new_actor = self.try_spawn_actor(blueprint, spawn_point)"
+    },
+    {
+      "tool": "carla_custom_rules",
+      "rule_id": "CRL-000",
+      "severity": "BLOCKER",
+      "category": "Scenario Specification",
+      "file": "test_projects/scenario_runner/srunner/osc2_dm/physical_types.py",
+      "line": 84,
+      "message": "SyntaxError: expected an indented block after function definition on line 81",
+      "snippet": null
+    },
+    {
+      "tool": "carla_custom_rules",
+      "rule_id": "CRL-000",
+      "severity": "BLOCKER",
+      "category": "Scenario Specification",
+      "file": "test_projects/scenario_runner/srunner/scenariomanager/actorcontrols/visualizer.py",
+      "line": 101,
+      "message": "SyntaxError: unexpected indent",
+      "snippet": null
+    }
+  ],
+  "tool_counts": {
+    "flake8": 0,
+    "pylint": 0,
+    "bandit": 0,
+    "carla_custom_rules": 5
+  }
+}
