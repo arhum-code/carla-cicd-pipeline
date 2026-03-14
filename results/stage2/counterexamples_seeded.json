@@ -1,6 +1,6 @@
 {
   "model_file": "results/stage2/agent_model_seeded.smv",
-  "check_time_sec": 0.3760058879852295,
+  "check_time_sec": 0.4835805892944336,
   "properties_checked": 7,
   "violations_found": 2,
   "failures": [

@@ -1,0 +1,79 @@
+{
+  "scenarios_dir": "results/stage2/scenarios_seeded",
+  "total_scenarios": 6,
+  "confirmed_detections": 0,
+  "results": [
+    {
+      "scenario_file": "results/stage2/scenarios_seeded/CE_001_ttc_threshold.xosc",
+      "property_name": "ttc_threshold",
+      "ran": true,
+      "exit_code": 1,
+      "simulation_failures": [],
+      "raw_log": "Traceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 50, in <module>\n    from srunner.scenarioconfigs.openscenario_configuration import OpenScenarioConfiguration\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarioconfigs/openscenario_configuration.py\", line 17, in <module>\n    import xmlschema\nModuleNotFoundError: No module named 'xmlschema'\n",
+      "confirmed_detection": false,
+      "detection_reason": "No observable simulation failure recorded",
+      "duration_sec": 0.16,
+      "error": null
+    },
+    {
+      "scenario_file": "results/stage2/scenarios_seeded/CE_002_urban_speed_limit.xosc",
+      "property_name": "urban_speed_limit",
+      "ran": true,
+      "exit_code": 1,
+      "simulation_failures": [],
+      "raw_log": "Traceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 50, in <module>\n    from srunner.scenarioconfigs.openscenario_configuration import OpenScenarioConfiguration\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarioconfigs/openscenario_configuration.py\", line 17, in <module>\n    import xmlschema\nModuleNotFoundError: No module named 'xmlschema'\n",
+      "confirmed_detection": false,
+      "detection_reason": "No observable simulation failure recorded",
+      "duration_sec": 0.16,
+      "error": null
+    },
+    {
+      "scenario_file": "results/stage2/scenarios_seeded/CE_003_red_light_compliance.xosc",
+      "property_name": "red_light_compliance",
+      "ran": true,
+      "exit_code": 1,
+      "simulation_failures": [],
+      "raw_log": "Traceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 50, in <module>\n    from srunner.scenarioconfigs.openscenario_configuration import OpenScenarioConfiguration\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarioconfigs/openscenario_configuration.py\", line 17, in <module>\n    import xmlschema\nModuleNotFoundError: No module named 'xmlschema'\n",
+      "confirmed_detection": false,
+      "detection_reason": "No observable simulation failure recorded",
+      "duration_sec": 0.18,
+      "error": null
+    },
+    {
+      "scenario_file": "results/stage2/scenarios_seeded/CE_004_no_collision.xosc",
+      "property_name": "no_collision",
+      "ran": true,
+      "exit_code": 1,
+      "simulation_failures": [],
+      "raw_log": "Traceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 50, in <module>\n    from srunner.scenarioconfigs.openscenario_configuration import OpenScenarioConfiguration\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarioconfigs/openscenario_configuration.py\", line 17, in <module>\n    import xmlschema\nModuleNotFoundError: No module named 'xmlschema'\n",
+      "confirmed_detection": false,
+      "detection_reason": "No observable simulation failure recorded",
+      "duration_sec": 0.17,
+      "error": null
+    },
+    {
+      "scenario_file": "results/stage2/scenarios_seeded/CE_005_pedestrian_safety.xosc",
+      "property_name": "pedestrian_safety",
+      "ran": true,
+      "exit_code": 1,
+      "simulation_failures": [],
+      "raw_log": "Traceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 50, in <module>\n    from srunner.scenarioconfigs.openscenario_configuration import OpenScenarioConfiguration\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarioconfigs/openscenario_configuration.py\", line 17, in <module>\n    import xmlschema\nModuleNotFoundError: No module named 'xmlschema'\n",
+      "confirmed_detection": false,
+      "detection_reason": "No observable simulation failure recorded",
+      "duration_sec": 0.18,
+      "error": null
+    },
+    {
+      "scenario_file": "results/stage2/scenarios_seeded/CE_006_agent_moves.xosc",
+      "property_name": "agent_moves",
+      "ran": true,
+      "exit_code": 1,
+      "simulation_failures": [],
+      "raw_log": "Traceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 50, in <module>\n    from srunner.scenarioconfigs.openscenario_configuration import OpenScenarioConfiguration\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarioconfigs/openscenario_configuration.py\", line 17, in <module>\n    import xmlschema\nModuleNotFoundError: No module named 'xmlschema'\n",
+      "confirmed_detection": false,
+      "detection_reason": "No observable simulation failure recorded",
+      "duration_sec": 0.18,
+      "error": null
+    }
+  ]
+}
