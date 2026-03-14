@@ -51,7 +51,7 @@ jobs:
 
   stage2-formal-synthesis:
     name: "Stage 2 — Formal Scenario Synthesis"
-    runs-on: [self-hosted, carla-gpu]
+    runs-on: [self-hosted]
     needs: stage1-static-analysis
     steps:
       - uses: actions/checkout@v4
@@ -95,7 +95,7 @@ jobs:
 
   aggregate-metrics:
     name: "Aggregate Pipeline Metrics"
-    runs-on: [self-hosted, carla-gpu]
+    runs-on: [self-hosted]
     needs: stage2-formal-synthesis
     steps:
       - uses: actions/checkout@v4
