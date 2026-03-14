@@ -41,7 +41,7 @@ jobs:
       - name: Check for BLOCKER violations
         run: |
           python3 pipeline/stage1_static/print_failure_report.py \
-            --report results/stage1/carla_rules_report.json
+            --summary results/stage1/carla_rules_report.json
 
       - name: Upload Stage 1 results
         uses: actions/upload-artifact@v4
