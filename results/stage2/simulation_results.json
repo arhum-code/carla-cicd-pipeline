@@ -13,10 +13,10 @@
         "success",
         "no_criteria"
       ],
-      "raw_log": "Preparing scenario: TTC drops below 1500ms \u2014 NPC brakes suddenly ahead of ego\nScenarioManager: Running scenario TTC drops below 1500ms \u2014 NPC brakes suddenly ahead of ego\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 197\nNo more scenarios .... Exiting\nWARNING:[SR:OpenScenarioConfiguration]: Wrong map in use. Forcing reload of CARLA world\nERROR: failed to destroy actor 197 : unable to destroy actor: not found \n",
+      "raw_log": "Preparing scenario: TTC drops below 1500ms \u2014 NPC brakes suddenly ahead of ego\nScenarioManager: Running scenario TTC drops below 1500ms \u2014 NPC brakes suddenly ahead of ego\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 245\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 245 : unable to destroy actor: not found \n",
       "confirmed_detection": true,
       "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 13.7,
+      "duration_sec": 11.02,
       "error": null
     },
     {
@@ -25,10 +25,10 @@
       "ran": true,
       "exit_code": 1,
       "simulation_failures": [],
-      "raw_log": "Preparing scenario: Ego exceeds urban speed limit \u2014 NPC triggers at intersection\nWARNING: Not all actors were spawned\nThe scenario cannot be loaded\nError: Unable to add actors\nDestroying ego vehicle 200\nNo more scenarios .... Exiting\nTraceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 417, in _load_and_run_scenario\n    scenario = OpenScenario(world=self.world,\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/open_scenario.py\", line 197, in __init__\n    super(OpenScenario, self).__init__(self.config.name, ego_vehicles=ego_vehicles, config=config,\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/basic_scenario.py\", line 64, in __init__\n    self._initialize_actors(config)\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/open_scenario.py\", line 621, in _initialize_actors\n    raise Exception(\"Error: Unable to add actors\")\nException: Error: Unable to add actors\n",
+      "raw_log": "Preparing scenario: Ego exceeds urban speed limit \u2014 NPC triggers at intersection\nWARNING: Not all actors were spawned\nThe scenario cannot be loaded\nError: Unable to add actors\nDestroying ego vehicle 248\nNo more scenarios .... Exiting\nTraceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 417, in _load_and_run_scenario\n    scenario = OpenScenario(world=self.world,\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/open_scenario.py\", line 197, in __init__\n    super(OpenScenario, self).__init__(self.config.name, ego_vehicles=ego_vehicles, config=config,\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/basic_scenario.py\", line 64, in __init__\n    self._initialize_actors(config)\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/open_scenario.py\", line 621, in _initialize_actors\n    raise Exception(\"Error: Unable to add actors\")\nException: Error: Unable to add actors\n",
       "confirmed_detection": false,
       "detection_reason": "No observable simulation failure recorded",
-      "duration_sec": 4.99,
+      "duration_sec": 4.96,
       "error": null
     },
     {
@@ -41,10 +41,10 @@
         "success",
         "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Ego fails to stop at red light \u2014 NPC crosses intersection\nScenarioManager: Running scenario Ego fails to stop at red light \u2014 NPC crosses intersection\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "raw_log": "Preparing scenario: Ego fails to stop at red light \u2014 NPC crosses intersection\nScenarioManager: Running scenario Ego fails to stop at red light \u2014 NPC crosses intersection\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 249\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 249 : unable to destroy actor: not found \n",
       "confirmed_detection": true,
       "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 11.08,
+      "duration_sec": 11.05,
       "error": null
     },
     {
@@ -58,10 +58,10 @@
         "success",
         "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Collision scenario \u2014 vehicles on collision course\nScenarioManager: Running scenario Collision scenario \u2014 vehicles on collision course\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 204\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 204 : unable to destroy actor: not found \n",
+      "raw_log": "Preparing scenario: Collision scenario \u2014 vehicles on collision course\nScenarioManager: Running scenario Collision scenario \u2014 vehicles on collision course\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
       "confirmed_detection": true,
       "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 10.13,
+      "duration_sec": 10.09,
       "error": null
     },
     {
@@ -74,10 +74,10 @@
         "success",
         "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Pedestrian steps into path \u2014 ego fails to brake\nScenarioManager: Running scenario Pedestrian steps into path \u2014 ego fails to brake\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 207\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 207 : unable to destroy actor: not found \n",
+      "raw_log": "Preparing scenario: Pedestrian steps into path \u2014 ego fails to brake\nScenarioManager: Running scenario Pedestrian steps into path \u2014 ego fails to brake\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 255\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 255 : unable to destroy actor: not found \n",
       "confirmed_detection": true,
       "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 11.05,
+      "duration_sec": 10.99,
       "error": null
     },
     {
@@ -90,10 +90,10 @@
         "success",
         "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Agent becomes stuck \u2014 no forward progress achieved\nScenarioManager: Running scenario Agent becomes stuck \u2014 no forward progress achieved\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 210\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 210 : unable to destroy actor: not found \n",
+      "raw_log": "Preparing scenario: Agent becomes stuck \u2014 no forward progress achieved\nScenarioManager: Running scenario Agent becomes stuck \u2014 no forward progress achieved\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 258\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 258 : unable to destroy actor: not found \n",
       "confirmed_detection": true,
       "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 10.43,
+      "duration_sec": 10.06,
       "error": null
     }
   ]
