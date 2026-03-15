@@ -77,6 +77,10 @@ jobs:
           conda activate carla_9_16_pipeline
           cd /home/zaeem/Desktop/carla-cicd-pipeline
           python3 pipeline/stage2_formal/extract_agent_model.py \
+            --agent-dir test_projects/scenario_runner_backup \
+            --output results/stage2/agent_model_clean.smv \
+            --project scenario_runner_clean
+          python3 pipeline/stage2_formal/extract_agent_model.py \
             --agent-dir test_projects/scenario_runner \
             --output results/stage2/agent_model_seeded.smv \
             --project scenario_runner_seeded
@@ -86,6 +90,10 @@ jobs:
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
           conda activate carla_9_16_pipeline
           cd /home/zaeem/Desktop/carla-cicd-pipeline
+          python3 pipeline/stage2_formal/run_model_checker.py \
+            --model results/stage2/agent_model_clean.smv \
+            --output results/stage2/counterexamples.json \
+            --timeout 300
           python3 pipeline/stage2_formal/run_model_checker.py \
             --model results/stage2/agent_model_seeded.smv \
             --output results/stage2/counterexamples_seeded.json \
