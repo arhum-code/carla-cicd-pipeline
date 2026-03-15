@@ -66,7 +66,7 @@ jobs:
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
           conda activate carla_9_16_pipeline
-          cd ~/Desktop/carla-cicd-pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
           python3 pipeline/stage2_formal/extract_agent_model.py \
             --agent-dir test_projects/scenario_runner \
             --output results/stage2/agent_model_seeded.smv \
@@ -76,7 +76,7 @@ jobs:
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
           conda activate carla_9_16_pipeline
-          cd ~/Desktop/carla-cicd-pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
           python3 pipeline/stage2_formal/run_model_checker.py \
             --model results/stage2/agent_model_seeded.smv \
             --output results/stage2/counterexamples_seeded.json \
@@ -86,7 +86,7 @@ jobs:
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
           conda activate carla_9_16_pipeline
-          cd ~/Desktop/carla-cicd-pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
           python3 pipeline/stage2_formal/run_scenarios.py \
             --scenarios-dir results/stage2/scenarios_seeded \
             --scenario-runner test_projects/scenario_runner/scenario_runner.py \
@@ -122,7 +122,7 @@ jobs:
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
           conda activate carla_9_16_pipeline
-          cd ~/Desktop/carla-cicd-pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
           python3 metrics/aggregate_pipeline_metrics.py \
             --ground-truth defect_seeding/ground_truth.json \
             --stage1 results/stage1/combined_report.json \
