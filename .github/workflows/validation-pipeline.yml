@@ -20,13 +20,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install flake8 pylint bandit
+          pip install flake8 flake8-json pylint bandit
+
+      - name: Create results dir
+        run: mkdir -p results/stage1
 
       - name: Run Flake8
-        run: flake8 test_projects/scenario_runner --max-line-length=120 --statistics || true
+        run: flake8 test_projects/scenario_runner --max-line-length=120 --format=json --output-file=results/stage1/flake8_report.json || true
 
       - name: Run Pylint
-        run: pylint test_projects/scenario_runner --exit-zero --output-format=json > results/stage1/pylint_report.json || true
+        run: |
+          find test_projects/scenario_runner -name '*.py' | xargs pylint --exit-zero --output-format=json 2>/dev/null > results/stage1/pylint_report.json || true
 
       - name: Run Bandit
         run: bandit -r test_projects/scenario_runner -f json -o results/stage1/bandit_report.json || true
