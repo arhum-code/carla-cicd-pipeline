@@ -184,7 +184,7 @@ def analyze_file(filepath: str) -> AnalysisResult:
         result.violations.append(RuleViolation(
             rule_id="CRL-000",
             severity="BLOCKER",
-            category="Scenario Specification",
+            category="Syntax Error",
             file=filepath,
             line=e.lineno or 0,
             message=f"SyntaxError: {e.msg}",
