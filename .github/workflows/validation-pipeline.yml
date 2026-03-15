@@ -37,6 +37,16 @@ jobs:
           python3 pipeline/stage1_static/carla_custom_rules.py \
             --target test_projects/scenario_runner \
             --output results/stage1/carla_rules_report.json
+          python3 pipeline/stage1_static/carla_custom_rules.py \
+            --target test_projects/leaderboard \
+            --output results/stage1/leaderboard_rules_report.json
+      
+      - name: Generate Combined Stage 1 Report
+        run: |
+          python3 pipeline/stage1_static/aggregate_results.py \
+            --reports results/stage1/carla_rules_report.json \
+                      results/stage1/leaderboard_rules_report.json \
+            --output results/stage1/combined_report.json
 
       - name: Check for BLOCKER violations
         run: |
