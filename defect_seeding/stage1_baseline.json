@@ -1,0 +1,27 @@
+[
+  {
+    "rule_id": "CRL-002",
+    "file": "no_rendering_mode.py",
+    "line": 1004
+  },
+  {
+    "rule_id": "CRL-002",
+    "file": "manual_control.py",
+    "line": 393
+  },
+  {
+    "rule_id": "CRL-001",
+    "file": "srunner/tests/carla_mocks/carla.py",
+    "line": 277
+  },
+  {
+    "rule_id": "CRL-000",
+    "file": "srunner/osc2_dm/physical_types.py",
+    "line": 84
+  },
+  {
+    "rule_id": "CRL-000",
+    "file": "srunner/scenariomanager/actorcontrols/visualizer.py",
+    "line": 101
+  }
+]
