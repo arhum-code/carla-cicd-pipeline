@@ -145,6 +145,7 @@ jobs:
             --stage1 results/stage1/combined_report.json \
             --stage2-clean results/stage2/counterexamples.json \
             --stage2-seeded results/stage2/counterexamples_seeded.json \
+            --simulation-results results/stage2/simulation_results.json \
             --output results/metrics_report.json
 
       - name: Upload Metrics

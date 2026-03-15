@@ -269,6 +269,7 @@ def main():
     parser.add_argument('--stage2-clean',   required=True, help='Path to clean counterexamples.json')
     parser.add_argument('--stage2-seeded',  required=True, help='Path to seeded counterexamples.json')
     parser.add_argument('--output',         required=True, help='Output metrics JSON path')
+    parser.add_argument('--simulation-results', default=None, help='Path to simulation_results.json')
     parser.add_argument('--line-window',    type=int, default=5,
                         help='Line number tolerance for matching (default: 5)')
     args = parser.parse_args()
@@ -283,6 +284,14 @@ def main():
     print(f"  Stage 1 findings     : {len(stage1_findings)}")
     print(f"  Stage 2 clean CEs    : {len(stage2_clean_ces)}")
     print(f"  Stage 2 seeded CEs   : {len(stage2_seeded_ces)}")
+    # Load simulation results
+    sim_confirmed = set()
+    if args.simulation_results and os.path.exists(args.simulation_results):
+        sim_data = json.load(open(args.simulation_results))
+        for r in sim_data.get('results', []):
+            if r.get('confirmed_detection'):
+                sim_confirmed.add(r.get('property_name', ''))
+        print(f"  Simulation confirmed : {len(sim_confirmed)}/{sim_data.get('total_scenarios', 0)}")
 
     # Detect Stage 2 structural differences
     # Also compare SMV models if paths can be inferred
@@ -374,7 +383,7 @@ def main():
                 'precision': round(stage2_metrics.precision, 4),
                 'recall': round(stage2_metrics.recall, 4),
                 'new_violations_vs_clean': new_stage2_violations,
-                'note': 'Stage 2 detects Logic Error defects via structural SMV model diff'
+                'note': f'Stage 2 detects Logic Error defects via structural SMV model diff. Simulation confirmed: {len(sim_confirmed)} scenarios'
             },
             'overlap_coefficient': round(
                 sum(1 for r in results if r.detected_by_stage1 and r.detected_by_stage2) /
