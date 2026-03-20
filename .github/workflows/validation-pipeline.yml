@@ -26,7 +26,7 @@ jobs:
         run: mkdir -p results/stage1
         
       - name: Record Stage 1 start time
-        run: echo "STAGE1_START=$(date +%s)" >> $GITHUB_ENV
+        run: date +%s > /tmp/stage1_start.txt
 
       - name: Run Flake8
         run: flake8 test_projects/scenario_runner --max-line-length=120 --format=json --output-file=results/stage1/flake8_report.json || true
@@ -125,7 +125,10 @@ jobs:
 
       - name: Write Stage 2 timing
         run: |
-          echo "{"stage": "stage2", "start": $STAGE2_START, "end": $(date +%s), "duration_sec": $(($(date +%s) - $STAGE2_START))}" > results/stage2/timing.json
+          START=$(cat /tmp/stage2_start.txt)
+          END=$(date +%s)
+          DURATION=$((END - START))
+          echo "{"stage": "stage2", "start": $START, "end": $END, "duration_sec": $DURATION}" > results/stage2/timing.json
       - name: Upload Stage 2 results
         uses: actions/upload-artifact@v4
         with:
