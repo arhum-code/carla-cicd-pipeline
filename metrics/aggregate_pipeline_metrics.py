@@ -270,6 +270,8 @@ def main():
     parser.add_argument('--stage2-seeded',  required=True, help='Path to seeded counterexamples.json')
     parser.add_argument('--output',         required=True, help='Output metrics JSON path')
     parser.add_argument('--simulation-results', default=None, help='Path to simulation_results.json')
+    parser.add_argument('--stage1-timing', default=None, help='Path to stage1 timing.json')
+    parser.add_argument('--stage2-timing', default=None, help='Path to stage2 timing.json')
     parser.add_argument('--line-window',    type=int, default=5,
                         help='Line number tolerance for matching (default: 5)')
     args = parser.parse_args()
@@ -292,6 +294,16 @@ def main():
             if r.get('confirmed_detection'):
                 sim_confirmed.add(r.get('property_name', ''))
         print(f"  Simulation confirmed : {len(sim_confirmed)}/{sim_data.get('total_scenarios', 0)}")
+    # Load timing data
+    timing = {}
+    for stage, arg in [('stage1', args.stage1_timing), ('stage2', args.stage2_timing)]:
+        if arg and os.path.exists(arg):
+            try:
+                t = json.load(open(arg))
+                timing[stage] = t
+                print(f"  {stage} duration      : {t.get('duration_sec', 'N/A')}s")
+            except Exception:
+                pass
 
     # Detect Stage 2 structural differences
     # Also compare SMV models if paths can be inferred
@@ -384,6 +396,10 @@ def main():
                 'recall': round(stage2_metrics.recall, 4),
                 'new_violations_vs_clean': new_stage2_violations,
                 'note': f'Stage 2 detects Logic Error defects via structural SMV model diff. Simulation confirmed: {len(sim_confirmed)} scenarios'
+            },
+            'timing': {
+                'stage1_duration_sec': timing.get('stage1', {}).get('duration_sec', None),
+                'stage2_duration_sec': timing.get('stage2', {}).get('duration_sec', None),
             },
             'overlap_coefficient': round(
                 sum(1 for r in results if r.detected_by_stage1 and r.detected_by_stage2) /

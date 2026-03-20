@@ -24,6 +24,9 @@ jobs:
 
       - name: Create results dir
         run: mkdir -p results/stage1
+        
+      - name: Record Stage 1 start time
+        run: echo "STAGE1_START=$(date +%s)" >> $GITHUB_ENV
 
       - name: Run Flake8
         run: flake8 test_projects/scenario_runner --max-line-length=120 --format=json --output-file=results/stage1/flake8_report.json || true
@@ -56,6 +59,11 @@ jobs:
           python3 pipeline/stage1_static/print_failure_report.py \
             --summary results/stage1/carla_rules_report.json \
             --baseline defect_seeding/stage1_baseline.json
+      
+      - name: Write Stage 1 timing
+        run: |
+          mkdir -p results/stage1
+          echo "{\"stage\": \"stage1\", \"start\": $STAGE1_START, \"end\": $(date +%s), \"duration_sec\": $(($(date +%s) - $STAGE1_START))}" > results/stage1/timing.json
 
       - name: Upload Stage 1 results
         uses: actions/upload-artifact@v4
@@ -115,6 +123,9 @@ jobs:
             --output results/stage2/simulation_results.json \
             --carla-port 2000 --timeout 30
 
+      - name: Write Stage 2 timing
+        run: |
+          echo "{"stage": "stage2", "start": $STAGE2_START, "end": $(date +%s), "duration_sec": $(($(date +%s) - $STAGE2_START))}" > results/stage2/timing.json
       - name: Upload Stage 2 results
         uses: actions/upload-artifact@v4
         with:
@@ -127,7 +138,7 @@ jobs:
     needs: stage2-formal-synthesis
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Download all results
         uses: actions/download-artifact@v4
         with:
@@ -151,7 +162,14 @@ jobs:
             --stage2-clean results/stage2/counterexamples.json \
             --stage2-seeded results/stage2/counterexamples_seeded.json \
             --simulation-results results/stage2/simulation_results.json \
+            --stage1-timing results/stage1/timing.json \
+            --stage2-timing results/stage2/timing.json \
             --output results/metrics_report.json
+      
+      - name: Write Stage 2 timing
+        run: |
+          mkdir -p results/stage2
+          echo "{\"stage\": \"stage2\", \"start\": $STAGE2_START, \"end\": $(date +%s), \"duration_sec\": $(($(date +%s) - $STAGE2_START))}" > results/stage2/timing.json
 
       - name: Upload Metrics
         uses: actions/upload-artifact@v4
