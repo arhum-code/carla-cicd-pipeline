@@ -84,6 +84,8 @@ jobs:
           name: stage1-results
           path: results/stage1/
 
+      - name: Record Stage 2 start time
+        run: date +%s > /tmp/s2start
       - name: Extract Agent Model
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
@@ -125,8 +127,10 @@ jobs:
 
       - name: Write Stage 2 timing
         run: |
+          START=$(cat /tmp/s2start)
           END=$(date +%s)
-          printf '{"stage":"stage2","end":%s}' "$END" > results/stage2/timing.json
+          DURATION=$((END - START))
+          printf '{"stage":"stage2","start":%s,"end":%s,"duration_sec":%s}' "$START" "$END" "$DURATION" > results/stage2/timing.json
       - name: Upload Stage 2 results
         uses: actions/upload-artifact@v4
         with:
