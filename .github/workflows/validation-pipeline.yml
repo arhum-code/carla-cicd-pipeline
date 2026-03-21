@@ -125,10 +125,8 @@ jobs:
 
       - name: Write Stage 2 timing
         run: |
-          START=$(cat /tmp/stage2_start.txt)
           END=$(date +%s)
-          DURATION=$((END - START))
-          echo "{"stage": "stage2", "start": $START, "end": $END, "duration_sec": $DURATION}" > results/stage2/timing.json
+          printf '{"stage":"stage2","end":%s}' "$END" > results/stage2/timing.json
       - name: Upload Stage 2 results
         uses: actions/upload-artifact@v4
         with:
@@ -169,11 +167,6 @@ jobs:
             --stage2-timing results/stage2/timing.json \
             --output results/metrics_report.json
       
-      - name: Write Stage 2 timing
-        run: |
-          mkdir -p results/stage2
-          echo "{\"stage\": \"stage2\", \"start\": $STAGE2_START, \"end\": $(date +%s), \"duration_sec\": $(($(date +%s) - $STAGE2_START))}" > results/stage2/timing.json
-
       - name: Upload Metrics
         uses: actions/upload-artifact@v4
         with:
