@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<OpenSCENARIO>
+  <FileHeader revMajor="1" revMinor="0" description="Speed limit compliance test"/>
+  <ParameterDeclarations/>
+  <CatalogLocations/>
+  <RoadNetwork>
+    <LogicFile filepath="Town01"/>
+  </RoadNetwork>
+  <Entities>
+    <ScenarioObject name="hero">
+      <Vehicle name="vehicle.lincoln.mkz_2017" vehicleCategory="car">
+        <ParameterDeclarations/>
+        <Performance maxSpeed="69.444" maxAcceleration="200" maxDeceleration="10.0"/>
+        <BoundingBox><Center x="1.5" y="0.0" z="0.9"/><Dimensions width="2.1" length="4.5" height="1.8"/></BoundingBox>
+        <Axles>
+          <FrontAxle maxSteering="0.5" wheelDiameter="0.6" trackWidth="1.8" positionX="3.1" positionZ="0.3"/>
+          <RearAxle  maxSteering="0.0" wheelDiameter="0.6" trackWidth="1.8" positionX="0.0" positionZ="0.3"/>
+        </Axles>
+        <Properties>
+          <Property name="type" value="ego_vehicle"/>
+          <Property name="rolename" value="hero"/>
+        </Properties>
+      </Vehicle>
+    </ScenarioObject>
+  </Entities>
+  <Storyboard>
+    <Init>
+      <Actions>
+        <Private entityRef="hero">
+          <PrivateAction>
+            <TeleportAction><Position>
+              <WorldPosition x="167.9" y="184.5" z="0.3" h="0"/>
+            </Position></TeleportAction>
+          </PrivateAction>
+        </Private>
+      </Actions>
+    </Init>
+    <Story name="SpeedStory">
+      <Act name="SpeedAct">
+        <ManeuverGroup name="HeroGroup" maximumExecutionCount="1">
+          <Actors selectTriggeringEntities="false">
+            <EntityRef entityRef="hero"/>
+          </Actors>
+          <Maneuver name="SpeedManeuver">
+            <Event name="SpeedEvent" priority="overwrite">
+              <Action name="SpeedAction">
+                <PrivateAction>
+                  <LongitudinalAction>
+                    <SpeedAction>
+                      <SpeedActionDynamics dynamicsShape="linear" value="2.7" dynamicsDimension="rate"/>
+                      <SpeedActionTarget>
+                        <AbsoluteTargetSpeed value="17.9"/>
+                      </SpeedActionTarget>
+                    </SpeedAction>
+                  </LongitudinalAction>
+                </PrivateAction>
+              </Action>
+              <StartTrigger>
+                <ConditionGroup>
+                  <Condition name="SpeedTrigger" delay="0" conditionEdge="rising">
+                    <ByValueCondition>
+                      <SimulationTimeCondition value="2.9" rule="greaterThan"/>
+                    </ByValueCondition>
+                  </Condition>
+                </ConditionGroup>
+              </StartTrigger>
+            </Event>
+          </Maneuver>
+        </ManeuverGroup>
+        <StartTrigger>
+          <ConditionGroup>
+            <Condition name="ActStart" delay="0" conditionEdge="rising">
+              <ByValueCondition>
+                <SimulationTimeCondition value="0" rule="greaterThan"/>
+              </ByValueCondition>
+            </Condition>
+          </ConditionGroup>
+        </StartTrigger>
+      </Act>
+    </Story>
+    <StopTrigger>
+    <ConditionGroup>
+      <Condition name="EndCondition" delay="0" conditionEdge="rising">
+        <ByValueCondition>
+          <SimulationTimeCondition value="22.0" rule="greaterThan"/>
+        </ByValueCondition>
+      </Condition>
+    </ConditionGroup>
+  </StopTrigger>
+  </Storyboard>
+</OpenSCENARIO>

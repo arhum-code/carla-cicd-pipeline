@@ -1,0 +1,112 @@
+{
+  "project": "scenario_runner_seeded",
+  "agent_type": "perception",
+  "timestamp": "2026-03-26T00:30:31.120187",
+  "scenarios": [
+    {
+      "filename": "scenario_runner_seeded_scenario_001.xosc",
+      "requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_001.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_002.xosc",
+      "requirement": "Vehicle must stop at red traffic lights",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_002.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_003.xosc",
+      "requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_003.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_004.xosc",
+      "requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_004.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_005.xosc",
+      "requirement": "Vehicle must avoid collision with stopped vehicles",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_005.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_006.xosc",
+      "requirement": "Vehicle must handle sudden pedestrian crossing",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_006.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_007.xosc",
+      "requirement": "Vehicle must merge safely into traffic",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_007.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_008.xosc",
+      "requirement": "Vehicle must navigate around obstacles",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_008.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_009.xosc",
+      "requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_009.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_010.xosc",
+      "requirement": "Vehicle must stop at red traffic lights",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_010.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_011.xosc",
+      "requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_011.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_012.xosc",
+      "requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_012.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_013.xosc",
+      "requirement": "Vehicle must avoid collision with stopped vehicles",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_013.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_014.xosc",
+      "requirement": "Vehicle must handle sudden pedestrian crossing",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_014.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_015.xosc",
+      "requirement": "Vehicle must merge safely into traffic",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_015.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_016.xosc",
+      "requirement": "Vehicle must navigate around obstacles",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_016.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_017.xosc",
+      "requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_017.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_018.xosc",
+      "requirement": "Vehicle must stop at red traffic lights",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_018.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_019.xosc",
+      "requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_019.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_020.xosc",
+      "requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
+      "filepath": "generated_scenarios/scenario_runner_seeded_scenario_020.xosc"
+    }
+  ],
+  "stats": {
+    "attempted": 20,
+    "successful": 20,
+    "failed": 0
+  }
+}

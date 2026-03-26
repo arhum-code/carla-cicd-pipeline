@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<OpenSCENARIO>
+  <FileHeader revMajor="1" revMinor="0" description="Pedestrian crossing safety test"/>
+  <ParameterDeclarations/>
+  <CatalogLocations/>
+  <RoadNetwork>
+    <LogicFile filepath="Town01"/>
+  </RoadNetwork>
+  <Entities>
+    <ScenarioObject name="hero">
+      <Vehicle name="vehicle.lincoln.mkz_2017" vehicleCategory="car">
+        <ParameterDeclarations/>
+        <Performance maxSpeed="69.444" maxAcceleration="200" maxDeceleration="10.0"/>
+        <BoundingBox><Center x="1.5" y="0.0" z="0.9"/><Dimensions width="2.1" length="4.5" height="1.8"/></BoundingBox>
+        <Axles>
+          <FrontAxle maxSteering="0.5" wheelDiameter="0.6" trackWidth="1.8" positionX="3.1" positionZ="0.3"/>
+          <RearAxle  maxSteering="0.0" wheelDiameter="0.6" trackWidth="1.8" positionX="0.0" positionZ="0.3"/>
+        </Axles>
+        <Properties>
+          <Property name="type" value="ego_vehicle"/>
+          <Property name="rolename" value="hero"/>
+        </Properties>
+      </Vehicle>
+    </ScenarioObject>
+    <ScenarioObject name="pedestrian">
+      <Pedestrian model="walker.pedestrian.0001" mass="80" name="walker" pedestrianCategory="pedestrian">
+        <ParameterDeclarations/>
+        <BoundingBox><Center x="0.5" y="0.0" z="0.9"/><Dimensions width="0.5" length="0.5" height="1.8"/></BoundingBox>
+        <Properties/>
+      </Pedestrian>
+    </ScenarioObject>
+  </Entities>
+  <Storyboard>
+    <Init>
+      <Actions>
+        <Private entityRef="hero">
+          <PrivateAction>
+            <TeleportAction><Position>
+              <WorldPosition x="173.4" y="160.2" z="0.3" h="0"/>
+            </Position></TeleportAction>
+          </PrivateAction>
+        </Private>
+        <Private entityRef="pedestrian">
+          <PrivateAction>
+            <TeleportAction><Position>
+              <WorldPosition x="181.8" y="161.5" z="0.3" h="1.57"/>
+            </Position></TeleportAction>
+          </PrivateAction>
+        </Private>
+      </Actions>
+    </Init>
+    <Story name="PedestrianStory">
+      <Act name="PedestrianAct">
+        <ManeuverGroup name="PedestrianGroup" maximumExecutionCount="1">
+          <Actors selectTriggeringEntities="false">
+            <EntityRef entityRef="pedestrian"/>
+          </Actors>
+          <Maneuver name="CrossingManeuver">
+            <Event name="WalkEvent" priority="overwrite">
+              <Action name="WalkAction">
+                <PrivateAction>
+                  <LongitudinalAction>
+                    <SpeedAction>
+                      <SpeedActionDynamics dynamicsShape="step" value="1.0" dynamicsDimension="time"/>
+                      <SpeedActionTarget>
+                        <AbsoluteTargetSpeed value="1.3"/>
+                      </SpeedActionTarget>
+                    </SpeedAction>
+                  </LongitudinalAction>
+                </PrivateAction>
+              </Action>
+              <StartTrigger>
+                <ConditionGroup>
+                  <Condition name="WalkTrigger" delay="0" conditionEdge="rising">
+                    <ByValueCondition>
+                      <SimulationTimeCondition value="2.8" rule="greaterThan"/>
+                    </ByValueCondition>
+                  </Condition>
+                </ConditionGroup>
+              </StartTrigger>
+            </Event>
+          </Maneuver>
+        </ManeuverGroup>
+        <StartTrigger>
+          <ConditionGroup>
+            <Condition name="ActStart" delay="0" conditionEdge="rising">
+              <ByValueCondition>
+                <SimulationTimeCondition value="0" rule="greaterThan"/>
+              </ByValueCondition>
+            </Condition>
+          </ConditionGroup>
+        </StartTrigger>
+      </Act>
+    </Story>
+    <StopTrigger>
+    <ConditionGroup>
+      <Condition name="EndCondition" delay="0" conditionEdge="rising">
+        <ByValueCondition>
+          <SimulationTimeCondition value="20.0" rule="greaterThan"/>
+        </ByValueCondition>
+      </Condition>
+    </ConditionGroup>
+  </StopTrigger>
+  </Storyboard>
+</OpenSCENARIO>
