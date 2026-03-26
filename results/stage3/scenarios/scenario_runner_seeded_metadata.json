@@ -1,7 +1,7 @@
 {
   "project": "scenario_runner_seeded",
   "agent_type": "perception",
-  "timestamp": "2026-03-25T23:31:18.874108",
+  "timestamp": "2026-03-26T00:50:59.672887",
   "scenarios": [
     {
       "filename": "scenario_runner_seeded_scenario_001.xosc",
@@ -27,11 +27,86 @@
       "filename": "scenario_runner_seeded_scenario_005.xosc",
       "requirement": "Vehicle must avoid collision with stopped vehicles",
       "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_005.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_006.xosc",
+      "requirement": "Vehicle must handle sudden pedestrian crossing",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_006.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_007.xosc",
+      "requirement": "Vehicle must merge safely into traffic",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_007.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_008.xosc",
+      "requirement": "Vehicle must navigate around obstacles",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_008.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_009.xosc",
+      "requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_009.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_010.xosc",
+      "requirement": "Vehicle must stop at red traffic lights",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_010.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_011.xosc",
+      "requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_011.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_012.xosc",
+      "requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_012.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_013.xosc",
+      "requirement": "Vehicle must avoid collision with stopped vehicles",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_013.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_014.xosc",
+      "requirement": "Vehicle must handle sudden pedestrian crossing",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_014.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_015.xosc",
+      "requirement": "Vehicle must merge safely into traffic",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_015.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_016.xosc",
+      "requirement": "Vehicle must navigate around obstacles",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_016.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_017.xosc",
+      "requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_017.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_018.xosc",
+      "requirement": "Vehicle must stop at red traffic lights",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_018.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_019.xosc",
+      "requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_019.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_020.xosc",
+      "requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_020.xosc"
     }
   ],
   "stats": {
-    "attempted": 5,
-    "successful": 5,
+    "attempted": 20,
+    "successful": 20,
     "failed": 0
   }
 }

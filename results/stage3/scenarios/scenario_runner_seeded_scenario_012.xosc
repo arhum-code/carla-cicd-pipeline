@@ -29,7 +29,7 @@
         <Private entityRef="hero">
           <PrivateAction>
             <TeleportAction><Position>
-              <WorldPosition x="164.5" y="152.3" z="0.3" h="0"/>
+              <WorldPosition x="155.6" y="156.3" z="0.3" h="0"/>
             </Position></TeleportAction>
           </PrivateAction>
         </Private>
@@ -47,9 +47,9 @@
                 <PrivateAction>
                   <LongitudinalAction>
                     <SpeedAction>
-                      <SpeedActionDynamics dynamicsShape="linear" value="1.7" dynamicsDimension="rate"/>
+                      <SpeedActionDynamics dynamicsShape="linear" value="3.4" dynamicsDimension="rate"/>
                       <SpeedActionTarget>
-                        <AbsoluteTargetSpeed value="10.6"/>
+                        <AbsoluteTargetSpeed value="11.8"/>
                       </SpeedActionTarget>
                     </SpeedAction>
                   </LongitudinalAction>
@@ -59,7 +59,7 @@
                 <ConditionGroup>
                   <Condition name="SpeedTrigger" delay="0" conditionEdge="rising">
                     <ByValueCondition>
-                      <SimulationTimeCondition value="1.8" rule="greaterThan"/>
+                      <SimulationTimeCondition value="1.9" rule="greaterThan"/>
                     </ByValueCondition>
                   </Condition>
                 </ConditionGroup>
@@ -82,7 +82,7 @@
     <ConditionGroup>
       <Condition name="EndCondition" delay="0" conditionEdge="rising">
         <ByValueCondition>
-          <SimulationTimeCondition value="20.0" rule="greaterThan"/>
+          <SimulationTimeCondition value="25.0" rule="greaterThan"/>
         </ByValueCondition>
       </Condition>
     </ConditionGroup>

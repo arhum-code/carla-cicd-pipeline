@@ -232,18 +232,7 @@ jobs:
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
           conda activate carla_9_16_pipeline
           cd /home/zaeem/Desktop/carla-cicd-pipeline
-          python3 metrics/aggregate_pipeline_metrics.py \
-            --ground-truth defect_seeding/ground_truth.json \
-            --stage1 results/stage1/combined_report.json \
-            --stage2-clean results/stage2/counterexamples.json \
-            --stage2-seeded results/stage2/counterexamples_seeded.json \
-            --stage2-simulation results/stage2/simulation_results.json \
-            --stage3-simulation results/stage3/simulation_results.json \
-            --stage3-metadata results/stage3/scenarios/scenario_runner_seeded_metadata.json \
-            --stage1-timing results/stage1/timing.json \
-            --stage2-timing results/stage2/timing.json \
-            --stage3-timing results/stage3/timing.json \
-            --output results/metrics_report.json
+          python3 metrics/aggregate_pipeline_metrics.py --ground-truth defect_seeding/ground_truth.json --stage1 results/stage1/combined_report.json --stage2-clean results/stage2/counterexamples.json --stage2-seeded results/stage2/counterexamples_seeded.json --simulation-results results/stage2/simulation_results.json --stage3-simulation results/stage3/simulation_results.json --stage3-metadata results/stage3/scenarios/scenario_runner_seeded_metadata.json --stage1-timing results/stage1/timing.json --stage2-timing results/stage2/timing.json --stage3-timing results/stage3/timing.json --output results/metrics_report.json
       
       - name: Print Summary
         run: |

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <OpenSCENARIO>
-  <FileHeader revMajor="1" revMinor="0" description="Speed limit compliance test"/>
+  <FileHeader revMajor="1" revMinor="0" description="Following distance safety test"/>
   <ParameterDeclarations/>
   <CatalogLocations/>
   <RoadNetwork>
@@ -22,6 +22,18 @@
         </Properties>
       </Vehicle>
     </ScenarioObject>
+    <ScenarioObject name="adversary">
+      <Vehicle name="vehicle.tesla.model3" vehicleCategory="car">
+        <ParameterDeclarations/>
+        <Performance maxSpeed="69.444" maxAcceleration="200" maxDeceleration="10.0"/>
+        <BoundingBox><Center x="1.5" y="0.0" z="0.9"/><Dimensions width="2.1" length="4.5" height="1.8"/></BoundingBox>
+        <Axles>
+          <FrontAxle maxSteering="0.5" wheelDiameter="0.6" trackWidth="1.8" positionX="3.1" positionZ="0.3"/>
+          <RearAxle  maxSteering="0.0" wheelDiameter="0.6" trackWidth="1.8" positionX="0.0" positionZ="0.3"/>
+        </Axles>
+        <Properties><Property name="type" value="simulation"/></Properties>
+      </Vehicle>
+    </ScenarioObject>
   </Entities>
   <Storyboard>
     <Init>
@@ -29,27 +41,34 @@
         <Private entityRef="hero">
           <PrivateAction>
             <TeleportAction><Position>
-              <WorldPosition x="164.5" y="152.3" z="0.3" h="0"/>
+              <WorldPosition x="181.4" y="165.8" z="0.3" h="0"/>
+            </Position></TeleportAction>
+          </PrivateAction>
+        </Private>
+        <Private entityRef="adversary">
+          <PrivateAction>
+            <TeleportAction><Position>
+              <WorldPosition x="124.1" y="177.6" z="0.3" h="0"/>
             </Position></TeleportAction>
           </PrivateAction>
         </Private>
       </Actions>
     </Init>
-    <Story name="SpeedStory">
-      <Act name="SpeedAct">
-        <ManeuverGroup name="HeroGroup" maximumExecutionCount="1">
+    <Story name="FollowingStory">
+      <Act name="FollowingAct">
+        <ManeuverGroup name="AdversaryGroup" maximumExecutionCount="1">
           <Actors selectTriggeringEntities="false">
-            <EntityRef entityRef="hero"/>
+            <EntityRef entityRef="adversary"/>
           </Actors>
-          <Maneuver name="SpeedManeuver">
-            <Event name="SpeedEvent" priority="overwrite">
-              <Action name="SpeedAction">
+          <Maneuver name="AdversaryManeuver">
+            <Event name="BrakeEvent" priority="overwrite">
+              <Action name="BrakeAction">
                 <PrivateAction>
                   <LongitudinalAction>
                     <SpeedAction>
-                      <SpeedActionDynamics dynamicsShape="linear" value="1.7" dynamicsDimension="rate"/>
+                      <SpeedActionDynamics dynamicsShape="linear" value="5.5" dynamicsDimension="rate"/>
                       <SpeedActionTarget>
-                        <AbsoluteTargetSpeed value="10.6"/>
+                        <AbsoluteTargetSpeed value="1.8"/>
                       </SpeedActionTarget>
                     </SpeedAction>
                   </LongitudinalAction>
@@ -57,9 +76,9 @@
               </Action>
               <StartTrigger>
                 <ConditionGroup>
-                  <Condition name="SpeedTrigger" delay="0" conditionEdge="rising">
+                  <Condition name="BrakeTrigger" delay="0" conditionEdge="rising">
                     <ByValueCondition>
-                      <SimulationTimeCondition value="1.8" rule="greaterThan"/>
+                      <SimulationTimeCondition value="2.3" rule="greaterThan"/>
                     </ByValueCondition>
                   </Condition>
                 </ConditionGroup>
@@ -82,7 +101,7 @@
     <ConditionGroup>
       <Condition name="EndCondition" delay="0" conditionEdge="rising">
         <ByValueCondition>
-          <SimulationTimeCondition value="20.0" rule="greaterThan"/>
+          <SimulationTimeCondition value="26.0" rule="greaterThan"/>
         </ByValueCondition>
       </Condition>
     </ConditionGroup>

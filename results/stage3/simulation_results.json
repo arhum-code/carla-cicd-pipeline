@@ -1,10 +1,10 @@
 {
   "stage": "stage3_llm",
   "scenarios_dir": "results/stage3/scenarios",
-  "total_scenarios": 5,
-  "scenarios_ran": 5,
-  "confirmed_detections": 5,
-  "detection_rate_pct": 100.0,
+  "total_scenarios": 20,
+  "scenarios_ran": 20,
+  "confirmed_detections": 1,
+  "detection_rate_pct": 5.0,
   "results": [
     {
       "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_001.xosc",
@@ -13,14 +13,15 @@
       "exit_code": 0,
       "simulation_failures": [
         "scenario_failure",
-        "success"
+        "success",
+        "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
-      "confirmed_detection": true,
-      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 11.6,
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 306\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 306 : unable to destroy actor: not found \n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 11.79,
       "error": null,
-      "safety_requirement": "LLM-generated scenario",
+      "safety_requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
       "stage": "stage3_llm"
     },
     {
@@ -30,14 +31,15 @@
       "exit_code": 0,
       "simulation_failures": [
         "scenario_failure",
-        "success"
+        "success",
+        "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
-      "confirmed_detection": true,
-      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 9.32,
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 8.62,
       "error": null,
-      "safety_requirement": "LLM-generated scenario",
+      "safety_requirement": "Vehicle must stop at red traffic lights",
       "stage": "stage3_llm"
     },
     {
@@ -47,14 +49,15 @@
       "exit_code": 0,
       "simulation_failures": [
         "scenario_failure",
-        "success"
+        "success",
+        "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Pedestrian crossing safety test\nScenarioManager: Running scenario Pedestrian crossing safety test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
-      "confirmed_detection": true,
-      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 7.81,
+      "raw_log": "Preparing scenario: Pedestrian crossing safety test\nScenarioManager: Running scenario Pedestrian crossing safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 7.07,
       "error": null,
-      "safety_requirement": "LLM-generated scenario",
+      "safety_requirement": "Vehicle must yield to pedestrians at crosswalks",
       "stage": "stage3_llm"
     },
     {
@@ -64,31 +67,301 @@
       "exit_code": 0,
       "simulation_failures": [
         "scenario_failure",
-        "success"
+        "success",
+        "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
-      "confirmed_detection": true,
-      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 9.85,
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 9.26,
       "error": null,
-      "safety_requirement": "LLM-generated scenario",
+      "safety_requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
       "stage": "stage3_llm"
     },
     {
       "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_005.xosc",
       "property_name": "seeded_scenario_005",
       "ran": true,
+      "exit_code": 1,
+      "simulation_failures": [
+        "scenario_failure"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nWARNING: Not all actors were spawned\nThe scenario cannot be loaded\nError: Unable to add actors\nDestroying ego vehicle 316\nNo more scenarios .... Exiting\nTraceback (most recent call last):\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/scenario_runner.py\", line 417, in _load_and_run_scenario\n    scenario = OpenScenario(world=self.world,\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/open_scenario.py\", line 197, in __init__\n    super(OpenScenario, self).__init__(self.config.name, ego_vehicles=ego_vehicles, config=config,\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/basic_scenario.py\", line 64, in __init__\n    self._initialize_actors(config)\n  File \"/home/zaeem/Desktop/carla-cicd-pipeline/test_projects/scenario_runner/srunner/scenarios/open_scenario.py\", line 621, in _initialize_actors\n    raise Exception(\"Error: Unable to add actors\")\nException: Error: Unable to add actors\n",
+      "confirmed_detection": true,
+      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
+      "duration_sec": 4.88,
+      "error": null,
+      "safety_requirement": "Vehicle must avoid collision with stopped vehicles",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_006.xosc",
+      "property_name": "seeded_scenario_006",
+      "ran": true,
       "exit_code": 0,
       "simulation_failures": [
         "scenario_failure",
-        "success"
+        "success",
+        "no_criteria"
       ],
-      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
-      "confirmed_detection": true,
-      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
-      "duration_sec": 12.82,
+      "raw_log": "Preparing scenario: Pedestrian crossing safety test\nScenarioManager: Running scenario Pedestrian crossing safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 7.88,
       "error": null,
-      "safety_requirement": "LLM-generated scenario",
+      "safety_requirement": "Vehicle must handle sudden pedestrian crossing",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_007.xosc",
+      "property_name": "seeded_scenario_007",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 12.78,
+      "error": null,
+      "safety_requirement": "Vehicle must merge safely into traffic",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_008.xosc",
+      "property_name": "seeded_scenario_008",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 10.84,
+      "error": null,
+      "safety_requirement": "Vehicle must navigate around obstacles",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_009.xosc",
+      "property_name": "seeded_scenario_009",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nWARNING: Cannot spawn actor vehicle.lincoln.mkz_2017 at position Location(x=182.699997, y=-162.399994, z=0.300000)\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 11.96,
+      "error": null,
+      "safety_requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_010.xosc",
+      "property_name": "seeded_scenario_010",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 328\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 328 : unable to destroy actor: not found \n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 8.42,
+      "error": null,
+      "safety_requirement": "Vehicle must stop at red traffic lights",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_011.xosc",
+      "property_name": "seeded_scenario_011",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Pedestrian crossing safety test\nWARNING: Cannot spawn actor vehicle.lincoln.mkz_2017 at position Location(x=152.600006, y=-171.000000, z=0.300000)\nScenarioManager: Running scenario Pedestrian crossing safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 7.72,
+      "error": null,
+      "safety_requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_012.xosc",
+      "property_name": "seeded_scenario_012",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 10.21,
+      "error": null,
+      "safety_requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_013.xosc",
+      "property_name": "seeded_scenario_013",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 13.01,
+      "error": null,
+      "safety_requirement": "Vehicle must avoid collision with stopped vehicles",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_014.xosc",
+      "property_name": "seeded_scenario_014",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Pedestrian crossing safety test\nWARNING: Cannot spawn actor vehicle.lincoln.mkz_2017 at position Location(x=170.899994, y=-165.899994, z=0.300000)\nScenarioManager: Running scenario Pedestrian crossing safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 8.08,
+      "error": null,
+      "safety_requirement": "Vehicle must handle sudden pedestrian crossing",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_015.xosc",
+      "property_name": "seeded_scenario_015",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 10.51,
+      "error": null,
+      "safety_requirement": "Vehicle must merge safely into traffic",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_016.xosc",
+      "property_name": "seeded_scenario_016",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nDestroying ego vehicle 342\nNo more scenarios .... Exiting\nERROR: failed to destroy actor 342 : unable to destroy actor: not found \n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 12.17,
+      "error": null,
+      "safety_requirement": "Vehicle must navigate around obstacles",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_017.xosc",
+      "property_name": "seeded_scenario_017",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 13.02,
+      "error": null,
+      "safety_requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_018.xosc",
+      "property_name": "seeded_scenario_018",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 9.59,
+      "error": null,
+      "safety_requirement": "Vehicle must stop at red traffic lights",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_019.xosc",
+      "property_name": "seeded_scenario_019",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Pedestrian crossing safety test\nScenarioManager: Running scenario Pedestrian crossing safety test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 8.36,
+      "error": null,
+      "safety_requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_020.xosc",
+      "property_name": "seeded_scenario_020",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success",
+        "no_criteria"
+      ],
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNothing to analyze, this scenario has no criteria\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": false,
+      "detection_reason": "No confirmed safety violation",
+      "duration_sec": 11.19,
+      "error": null,
+      "safety_requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
       "stage": "stage3_llm"
     }
   ]

@@ -29,7 +29,7 @@
         <Private entityRef="hero">
           <PrivateAction>
             <TeleportAction><Position>
-              <WorldPosition x="167.2" y="155.4" z="0.3" h="0"/>
+              <WorldPosition x="156.0" y="171.3" z="0.3" h="0"/>
             </Position></TeleportAction>
           </PrivateAction>
         </Private>
@@ -47,9 +47,9 @@
                 <PrivateAction>
                   <LongitudinalAction>
                     <SpeedAction>
-                      <SpeedActionDynamics dynamicsShape="linear" value="2.4" dynamicsDimension="rate"/>
+                      <SpeedActionDynamics dynamicsShape="linear" value="3.1" dynamicsDimension="rate"/>
                       <SpeedActionTarget>
-                        <AbsoluteTargetSpeed value="10.7"/>
+                        <AbsoluteTargetSpeed value="13.7"/>
                       </SpeedActionTarget>
                     </SpeedAction>
                   </LongitudinalAction>
@@ -59,7 +59,7 @@
                 <ConditionGroup>
                   <Condition name="SpeedTrigger" delay="0" conditionEdge="rising">
                     <ByValueCondition>
-                      <SimulationTimeCondition value="2.2" rule="greaterThan"/>
+                      <SimulationTimeCondition value="1.1" rule="greaterThan"/>
                     </ByValueCondition>
                   </Condition>
                 </ConditionGroup>
@@ -79,20 +79,13 @@
       </Act>
     </Story>
     <StopTrigger>
-      <ConditionGroup>
-        <Condition name="EndCondition" delay="0" conditionEdge="rising">
-          <ByValueCondition>
-            <SimulationTimeCondition value="26.0" rule="greaterThan"/>
-          </ByValueCondition>
-        </Condition>
-      </ConditionGroup>
-      <ConditionGroup>
-        <Condition name="criteria_CollisionTest" delay="0" conditionEdge="rising">
-          <ByValueCondition>
-            <ParameterCondition parameterRef="" value="" rule="equalTo"/>
-          </ByValueCondition>
-        </Condition>
-      </ConditionGroup>
-    </StopTrigger>
+    <ConditionGroup>
+      <Condition name="EndCondition" delay="0" conditionEdge="rising">
+        <ByValueCondition>
+          <SimulationTimeCondition value="28.0" rule="greaterThan"/>
+        </ByValueCondition>
+      </Condition>
+    </ConditionGroup>
+  </StopTrigger>
   </Storyboard>
 </OpenSCENARIO>

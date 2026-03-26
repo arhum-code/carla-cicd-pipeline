@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <OpenSCENARIO>
-  <FileHeader revMajor="1" revMinor="0" description="Speed limit compliance test"/>
+  <FileHeader revMajor="1" revMinor="0" description="Pedestrian crossing safety test"/>
   <ParameterDeclarations/>
   <CatalogLocations/>
   <RoadNetwork>
@@ -22,6 +22,13 @@
         </Properties>
       </Vehicle>
     </ScenarioObject>
+    <ScenarioObject name="pedestrian">
+      <Pedestrian model="walker.pedestrian.0001" mass="80" name="walker" pedestrianCategory="pedestrian">
+        <ParameterDeclarations/>
+        <BoundingBox><Center x="0.5" y="0.0" z="0.9"/><Dimensions width="0.5" length="0.5" height="1.8"/></BoundingBox>
+        <Properties/>
+      </Pedestrian>
+    </ScenarioObject>
   </Entities>
   <Storyboard>
     <Init>
@@ -29,27 +36,34 @@
         <Private entityRef="hero">
           <PrivateAction>
             <TeleportAction><Position>
-              <WorldPosition x="164.5" y="152.3" z="0.3" h="0"/>
+              <WorldPosition x="170.9" y="165.9" z="0.3" h="0"/>
+            </Position></TeleportAction>
+          </PrivateAction>
+        </Private>
+        <Private entityRef="pedestrian">
+          <PrivateAction>
+            <TeleportAction><Position>
+              <WorldPosition x="192.4" y="162.7" z="0.3" h="1.57"/>
             </Position></TeleportAction>
           </PrivateAction>
         </Private>
       </Actions>
     </Init>
-    <Story name="SpeedStory">
-      <Act name="SpeedAct">
-        <ManeuverGroup name="HeroGroup" maximumExecutionCount="1">
+    <Story name="PedestrianStory">
+      <Act name="PedestrianAct">
+        <ManeuverGroup name="PedestrianGroup" maximumExecutionCount="1">
           <Actors selectTriggeringEntities="false">
-            <EntityRef entityRef="hero"/>
+            <EntityRef entityRef="pedestrian"/>
           </Actors>
-          <Maneuver name="SpeedManeuver">
-            <Event name="SpeedEvent" priority="overwrite">
-              <Action name="SpeedAction">
+          <Maneuver name="CrossingManeuver">
+            <Event name="WalkEvent" priority="overwrite">
+              <Action name="WalkAction">
                 <PrivateAction>
                   <LongitudinalAction>
                     <SpeedAction>
-                      <SpeedActionDynamics dynamicsShape="linear" value="1.7" dynamicsDimension="rate"/>
+                      <SpeedActionDynamics dynamicsShape="step" value="1.0" dynamicsDimension="time"/>
                       <SpeedActionTarget>
-                        <AbsoluteTargetSpeed value="10.6"/>
+                        <AbsoluteTargetSpeed value="1.1"/>
                       </SpeedActionTarget>
                     </SpeedAction>
                   </LongitudinalAction>
@@ -57,9 +71,9 @@
               </Action>
               <StartTrigger>
                 <ConditionGroup>
-                  <Condition name="SpeedTrigger" delay="0" conditionEdge="rising">
+                  <Condition name="WalkTrigger" delay="0" conditionEdge="rising">
                     <ByValueCondition>
-                      <SimulationTimeCondition value="1.8" rule="greaterThan"/>
+                      <SimulationTimeCondition value="1.9" rule="greaterThan"/>
                     </ByValueCondition>
                   </Condition>
                 </ConditionGroup>
@@ -82,7 +96,7 @@
     <ConditionGroup>
       <Condition name="EndCondition" delay="0" conditionEdge="rising">
         <ByValueCondition>
-          <SimulationTimeCondition value="20.0" rule="greaterThan"/>
+          <SimulationTimeCondition value="30.0" rule="greaterThan"/>
         </ByValueCondition>
       </Condition>
     </ConditionGroup>

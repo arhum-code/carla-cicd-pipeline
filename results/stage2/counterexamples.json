@@ -1,6 +1,6 @@
 {
   "model_file": "results/stage2/agent_model_clean.smv",
-  "check_time_sec": 0.5661959648132324,
+  "check_time_sec": 0.43762755393981934,
   "properties_checked": 7,
   "violations_found": 2,
   "failures": [
