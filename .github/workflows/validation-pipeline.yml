@@ -6,38 +6,37 @@ on:
   workflow_dispatch:
 
 jobs:
-
   stage1-static-analysis:
     name: "Stage 1 — Static Analysis"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
+      
       - name: Install dependencies
         run: |
           pip install flake8 flake8-json pylint bandit
-
+      
       - name: Create results dir
         run: mkdir -p results/stage1
         
       - name: Record Stage 1 start time
         run: echo "STAGE1_START=$(date +%s)" >> $GITHUB_ENV
-
+      
       - name: Run Flake8
         run: flake8 test_projects/scenario_runner --max-line-length=120 --format=json --output-file=results/stage1/flake8_report.json || true
-
+      
       - name: Run Pylint
         run: |
           find test_projects/scenario_runner -name '*.py' | xargs pylint --exit-zero --output-format=json 2>/dev/null > results/stage1/pylint_report.json || true
-
+      
       - name: Run Bandit
         run: bandit -r test_projects/scenario_runner -f json -o results/stage1/bandit_report.json || true
-
+      
       - name: Run CARLA Custom Rules
         run: |
           mkdir -p results/stage1
@@ -47,13 +46,13 @@ jobs:
           python3 pipeline/stage1_static/carla_custom_rules.py \
             --target test_projects/leaderboard \
             --output results/stage1/leaderboard_rules_report.json
-
+      
       - name: Generate Combined Stage 1 Report
         run: |
           python3 pipeline/stage1_static/aggregate_results.py \
             --results-dir results/stage1 \
             --output results/stage1/combined_report.json
-
+      
       - name: Check for BLOCKER violations
         run: |
           python3 pipeline/stage1_static/print_failure_report.py \
@@ -64,7 +63,7 @@ jobs:
         run: |
           mkdir -p results/stage1
           echo "{\"stage\": \"stage1\", \"start\": $STAGE1_START, \"end\": $(date +%s), \"duration_sec\": $(($(date +%s) - $STAGE1_START))}" > results/stage1/timing.json
-
+      
       - name: Upload Stage 1 results
         uses: actions/upload-artifact@v4
         with:
@@ -77,15 +76,16 @@ jobs:
     needs: stage1-static-analysis
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Download Stage 1 results
         uses: actions/download-artifact@v4
         with:
           name: stage1-results
           path: results/stage1/
-
+      
       - name: Record Stage 2 start time
         run: date +%s > /tmp/s2start
+      
       - name: Extract Agent Model
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
@@ -99,7 +99,7 @@ jobs:
             --agent-dir test_projects/scenario_runner \
             --output results/stage2/agent_model_seeded.smv \
             --project scenario_runner_seeded
-
+      
       - name: Run nuXmv Model Checker
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
@@ -113,7 +113,7 @@ jobs:
             --model results/stage2/agent_model_seeded.smv \
             --output results/stage2/counterexamples_seeded.json \
             --timeout 300
-
+      
       - name: Run CARLA Scenarios
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
@@ -124,38 +124,120 @@ jobs:
             --scenario-runner test_projects/scenario_runner/scenario_runner.py \
             --output results/stage2/simulation_results.json \
             --carla-port 2000 --timeout 30
-
+      
       - name: Write Stage 2 timing
         run: |
           START=$(cat /tmp/s2start)
           END=$(date +%s)
           DURATION=$((END - START))
           printf '{"stage":"stage2","start":%s,"end":%s,"duration_sec":%s}' "$START" "$END" "$DURATION" > results/stage2/timing.json
+      
       - name: Upload Stage 2 results
         uses: actions/upload-artifact@v4
         with:
           name: stage2-results
           path: results/stage2/
 
-  aggregate-metrics:
-    name: "Aggregate Pipeline Metrics"
+  stage3-llm-generation:
+    name: "Stage 3 — LLM-Assisted Generation"
     runs-on: [self-hosted]
     needs: stage2-formal-synthesis
     steps:
       - uses: actions/checkout@v4
       
-      - name: Download all results
-        uses: actions/download-artifact@v4
-        with:
-          name: stage1-results
-          path: results/stage1/
-
       - name: Download Stage 2 results
         uses: actions/download-artifact@v4
         with:
           name: stage2-results
           path: results/stage2/
+      
+      - name: Record Stage 3 start time
+        run: date +%s > /tmp/s3start
+      
+      - name: Create results directory
+        run: mkdir -p results/stage3
+      
+      - name: Install Python dependencies
+        run: |
+          source /home/zaeem/anaconda3/etc/profile.d/conda.sh
+          conda activate carla_9_16_pipeline
+          pip install requests --quiet
+      
+      - name: Generate LLM Scenarios
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          source /home/zaeem/anaconda3/etc/profile.d/conda.sh
+          conda activate carla_9_16_pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
+          python3 pipeline/stage3_llm/llm_hf.py \
+            --project scenario_runner_seeded
+            --output-dir results/stage3/scenarios \
+            --agent-type perception \
+            --num-scenarios 20 \
+            --output-dir results/stage3/scenarios
+      
+      - name: Validate Generated Scenarios
+        run: |
+          source /home/zaeem/anaconda3/etc/profile.d/conda.sh
+          conda activate carla_9_16_pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
+          # Count successful scenarios
+          SCENARIOS=$(ls results/stage3/scenarios/*.xosc 2>/dev/null | wc -l)
+          echo "Generated $SCENARIOS scenarios"
+          echo "{\"generated_count\": $SCENARIOS}" > results/stage3/generation_stats.json
+      
+      - name: Run LLM Scenarios in CARLA
+        run: |
+          source /home/zaeem/anaconda3/etc/profile.d/conda.sh
+          conda activate carla_9_16_pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
+          python3 pipeline/stage3_llm/run_llm_scenarios.py \
+            --scenarios-dir results/stage3/scenarios \
+            --scenario-runner test_projects/scenario_runner/scenario_runner.py \
+            --output results/stage3/simulation_results.json \
+            --stage3-metadata results/stage3/scenarios/scenario_runner_seeded_metadata.json \
+            --carla-port 2000 \
+            --timeout 30
+      
+      - name: Write Stage 3 timing
+        run: |
+          START=$(cat /tmp/s3start)
+          END=$(date +%s)
+          DURATION=$((END - START))
+          printf '{"stage":"stage3","start":%s,"end":%s,"duration_sec":%s}' "$START" "$END" "$DURATION" > results/stage3/timing.json
+      
+      - name: Upload Stage 3 results
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage3-results
+          path: results/stage3/
 
+  aggregate-metrics:
+    name: "Aggregate Pipeline Metrics"
+    runs-on: [self-hosted]
+    needs: [stage1-static-analysis, stage2-formal-synthesis, stage3-llm-generation]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download Stage 1 results
+        uses: actions/download-artifact@v4
+        with:
+          name: stage1-results
+          path: results/stage1/
+      
+      - name: Download Stage 2 results
+        uses: actions/download-artifact@v4
+        with:
+          name: stage2-results
+          path: results/stage2/
+      
+      - name: Download Stage 3 results
+        uses: actions/download-artifact@v4
+        with:
+          name: stage3-results
+          path: results/stage3/
+      
       - name: Run Metrics Aggregator
         run: |
           source /home/zaeem/anaconda3/etc/profile.d/conda.sh
@@ -166,10 +248,20 @@ jobs:
             --stage1 results/stage1/combined_report.json \
             --stage2-clean results/stage2/counterexamples.json \
             --stage2-seeded results/stage2/counterexamples_seeded.json \
-            --simulation-results results/stage2/simulation_results.json \
+            --stage2-simulation results/stage2/simulation_results.json \
+            --stage3-simulation results/stage3/simulation_results.json \
+            --stage3-metadata results/stage3/scenarios/scenario_runner_seeded_metadata.json \
             --stage1-timing results/stage1/timing.json \
             --stage2-timing results/stage2/timing.json \
+            --stage3-timing results/stage3/timing.json \
             --output results/metrics_report.json
+      
+      - name: Print Summary
+        run: |
+          source /home/zaeem/anaconda3/etc/profile.d/conda.sh
+          conda activate carla_9_16_pipeline
+          cd /home/zaeem/Desktop/carla-cicd-pipeline
+          python3 metrics/print_summary.py --metrics results/metrics_report.json
       
       - name: Upload Metrics
         uses: actions/upload-artifact@v4

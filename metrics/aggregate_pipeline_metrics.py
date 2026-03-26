@@ -274,6 +274,9 @@ def main():
     parser.add_argument('--stage2-timing', default=None, help='Path to stage2 timing.json')
     parser.add_argument('--line-window',    type=int, default=5,
                         help='Line number tolerance for matching (default: 5)')
+    parser.add_argument('--stage3-simulation', type=Path, help='Stage 3 simulation results JSON')
+    parser.add_argument('--stage3-metadata', type=Path, help='Stage 3 metadata JSON')
+    parser.add_argument('--stage3-timing', type=Path, help='Stage 3 timing JSON')
     args = parser.parse_args()
 
     print("Loading inputs...")

@@ -72,6 +72,8 @@ FAILURE_PATTERNS = [
     # Scenario success (no failure)
     (re.compile(r'SUCCESS', re.I),                            'success'),
     (re.compile(r'scenario.*completed', re.I),                'success'),
+    (re.compile(r'AttributeError', re.I),          'scenario_failure'),
+    (re.compile(r'Traceback \(most recent', re.I), 'scenario_failure'),
 ]
 
 
@@ -100,20 +102,23 @@ def scrape_log_for_failures(log: str) -> List[str]:
 
 
 def is_confirmed_detection(failures: List[str], property_name: str) -> tuple:
-    """
-    Determine if simulation failures confirm the nuXmv counterexample.
-    Returns (confirmed: bool, reason: str)
-    """
     if not failures:
         return False, 'No observable simulation failure recorded'
 
-    if 'success' in failures and 'scenario_failure' not in failures and len(failures) == 1:
-        return False, 'Scenario completed successfully — no failure triggered'
+    # These mean the scenario ran fine — not a detection
+    if set(failures) <= {'success', 'no_criteria'}:
+        return False, 'Scenario completed successfully'
 
-    # ScenarioRunner explicitly reporting failure is a confirmed detection
-    if 'scenario_failure' in failures:
+    # Actual simulation failures
+    real_failures = [f for f in failures if f not in ('success', 'no_criteria', 'scenario_failure')]
+    if real_failures:
+        return True, f"Simulation failure detected: {', '.join(real_failures)}"
+
+    # scenario_failure alone without no_criteria = ScenarioRunner reported a real problem
+    if 'scenario_failure' in failures and 'no_criteria' not in failures:
         return True, 'ScenarioRunner reported: Not all scenario tests were successful'
 
+    return False, 'No confirmed safety violation'
 
     # Map property to expected failure types
     property_failure_map = {

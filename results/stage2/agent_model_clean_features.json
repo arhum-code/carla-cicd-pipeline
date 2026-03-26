@@ -1,0 +1,115 @@
+{
+  "project": "scenario_runner_clean",
+  "files_analyzed": 30,
+  "features": {
+    "has_speed_control": true,
+    "has_distance_check": true,
+    "has_traffic_light_check": true,
+    "has_lane_change": true,
+    "has_brake_control": true,
+    "has_sensor_fusion": true,
+    "max_speed_value": -1.0,
+    "min_distance_value": 2.0,
+    "control_functions": [
+      "run_step",
+      "run_step",
+      "run_step",
+      "run_step",
+      "run_step",
+      "run_step",
+      "run_step",
+      "_update_plan",
+      "run_step",
+      "run_step",
+      "run_step",
+      "_initialize_actors",
+      "on_vehicle_control",
+      "publish_plan",
+      "use_stepping_mode",
+      "run_step",
+      "run_interface",
+      "run_step",
+      "_json_to_control",
+      "_parse_json_control",
+      "_record_control",
+      "run_step",
+      "run_step",
+      "set_global_plan",
+      "run_step",
+      "get_actor_display_name",
+      "get_actor_display_name",
+      "select_hero_actor",
+      "_split_actors",
+      "render_actors",
+      "_load_and_run_scenario",
+      "_run_scenarios",
+      "_run_route",
+      "_run_openscenario",
+      "_run_osc2",
+      "run",
+      "get_friction_from_env_action",
+      "get_weather_from_env_action",
+      "get_controller",
+      "set_traffic_signal_controller",
+      "get_distance_between_actors"
+    ]
+  },
+  "extracted_conditions": [
+    {
+      "variable": "distance",
+      "operator": ">",
+      "threshold": 0.0,
+      "in_brake_context": false,
+      "in_throttle_context": false
+    },
+    {
+      "variable": "speed",
+      "operator": ">=",
+      "threshold": -1.0,
+      "in_brake_context": false,
+      "in_throttle_context": false
+    },
+    {
+      "variable": "speed",
+      "operator": "<",
+      "threshold": -1.0,
+      "in_brake_context": true,
+      "in_throttle_context": false
+    },
+    {
+      "variable": "speed",
+      "operator": "=",
+      "threshold": 0.0,
+      "in_brake_context": false,
+      "in_throttle_context": false
+    },
+    {
+      "variable": "speed",
+      "operator": "<",
+      "threshold": 0.0,
+      "in_brake_context": false,
+      "in_throttle_context": false
+    },
+    {
+      "variable": "speed",
+      "operator": "<",
+      "threshold": -1.0,
+      "in_brake_context": false,
+      "in_throttle_context": true
+    },
+    {
+      "variable": "speed",
+      "operator": ">",
+      "threshold": -1.0,
+      "in_brake_context": false,
+      "in_throttle_context": true
+    },
+    {
+      "variable": "distance",
+      "operator": "<",
+      "threshold": 2.0,
+      "in_brake_context": false,
+      "in_throttle_context": false
+    }
+  ]
+}

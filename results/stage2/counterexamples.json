@@ -1,19 +1,19 @@
 {
-  "model_file": "results/stage2/agent_model.smv",
-  "check_time_sec": 0.3830127716064453,
+  "model_file": "results/stage2/agent_model_clean.smv",
+  "check_time_sec": 0.5516471862792969,
   "properties_checked": 7,
   "violations_found": 2,
   "failures": [
     {
       "property_name": "property_2",
-      "file": "results/stage2/agent_model.smv",
+      "file": "results/stage2/agent_model_clean.smv",
       "line": 0,
       "steps": 54,
       "category": "Logic Error"
     },
     {
       "property_name": "agent_moves",
-      "file": "results/stage2/agent_model.smv",
+      "file": "results/stage2/agent_model_clean.smv",
       "line": 0,
       "steps": 54,
       "category": "Logic Error"

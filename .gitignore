@@ -1,3 +1,4 @@
 test_projects/leaderboard/docs/
 test_projects/leaderboard_backup/
 test_projects/scenario_runner_backup/
+.env

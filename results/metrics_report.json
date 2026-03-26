@@ -16,7 +16,11 @@
       "new_violations_vs_clean": [
         "SMV_STRUCTURAL_DIFF"
       ],
-      "note": "Stage 2 detects Logic Error defects via structural SMV model diff"
+      "note": "Stage 2 detects Logic Error defects via structural SMV model diff. Simulation confirmed: 5 scenarios"
+    },
+    "timing": {
+      "stage1_duration_sec": null,
+      "stage2_duration_sec": null
     },
     "overlap_coefficient": 0.0,
     "complementarity_coefficient": 1.0

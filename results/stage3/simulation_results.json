@@ -1,0 +1,95 @@
+{
+  "stage": "stage3_llm",
+  "scenarios_dir": "results/stage3/scenarios",
+  "total_scenarios": 5,
+  "scenarios_ran": 5,
+  "confirmed_detections": 5,
+  "detection_rate_pct": 100.0,
+  "results": [
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_001.xosc",
+      "property_name": "seeded_scenario_001",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": true,
+      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
+      "duration_sec": 11.6,
+      "error": null,
+      "safety_requirement": "LLM-generated scenario",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_002.xosc",
+      "property_name": "seeded_scenario_002",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success"
+      ],
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": true,
+      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
+      "duration_sec": 9.32,
+      "error": null,
+      "safety_requirement": "LLM-generated scenario",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_003.xosc",
+      "property_name": "seeded_scenario_003",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success"
+      ],
+      "raw_log": "Preparing scenario: Pedestrian crossing safety test\nScenarioManager: Running scenario Pedestrian crossing safety test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": true,
+      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
+      "duration_sec": 7.81,
+      "error": null,
+      "safety_requirement": "LLM-generated scenario",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_004.xosc",
+      "property_name": "seeded_scenario_004",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success"
+      ],
+      "raw_log": "Preparing scenario: Speed limit compliance test\nScenarioManager: Running scenario Speed limit compliance test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": true,
+      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
+      "duration_sec": 9.85,
+      "error": null,
+      "safety_requirement": "LLM-generated scenario",
+      "stage": "stage3_llm"
+    },
+    {
+      "scenario_file": "results/stage3/scenarios/scenario_runner_seeded_scenario_005.xosc",
+      "property_name": "seeded_scenario_005",
+      "ran": true,
+      "exit_code": 0,
+      "simulation_failures": [
+        "scenario_failure",
+        "success"
+      ],
+      "raw_log": "Preparing scenario: Following distance safety test\nScenarioManager: Running scenario Following distance safety test\nNot all scenario tests were successful\nPlease run with --output for further information\nNo more scenarios .... Exiting\n",
+      "confirmed_detection": true,
+      "detection_reason": "ScenarioRunner reported: Not all scenario tests were successful",
+      "duration_sec": 12.82,
+      "error": null,
+      "safety_requirement": "LLM-generated scenario",
+      "stage": "stage3_llm"
+    }
+  ]
+}

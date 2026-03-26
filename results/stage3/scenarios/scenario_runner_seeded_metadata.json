@@ -1,0 +1,37 @@
+{
+  "project": "scenario_runner_seeded",
+  "agent_type": "perception",
+  "timestamp": "2026-03-25T23:31:18.874108",
+  "scenarios": [
+    {
+      "filename": "scenario_runner_seeded_scenario_001.xosc",
+      "requirement": "Vehicle must maintain safe following distance of at least 2 seconds",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_001.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_002.xosc",
+      "requirement": "Vehicle must stop at red traffic lights",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_002.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_003.xosc",
+      "requirement": "Vehicle must yield to pedestrians at crosswalks",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_003.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_004.xosc",
+      "requirement": "Vehicle must not exceed urban speed limit of 50 km/h",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_004.xosc"
+    },
+    {
+      "filename": "scenario_runner_seeded_scenario_005.xosc",
+      "requirement": "Vehicle must avoid collision with stopped vehicles",
+      "filepath": "results/stage3/scenarios/scenario_runner_seeded_scenario_005.xosc"
+    }
+  ],
+  "stats": {
+    "attempted": 5,
+    "successful": 5,
+    "failed": 0
+  }
+}
